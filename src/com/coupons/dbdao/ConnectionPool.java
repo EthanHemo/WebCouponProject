@@ -22,11 +22,11 @@ public class ConnectionPool {
 	// them up when needed (see "closeAllConnections" method)
 	private Connection[] connectionArr;
 	// Constant of the number of connections
-	private static final int NUM_OF_CONNECTIONS = 5;
+	private static final int NUM_OF_CONNECTIONS = 10;
 	// Connection details
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/projdb";
 	private static final String DATABASE_USERNAME = "root";
-	private static final String DATABASE_PASSWORD = "password";
+	private static final String DATABASE_PASSWORD = "Root";
 
 	/***
 	 * This function give the instance of the connection pool. if its first use

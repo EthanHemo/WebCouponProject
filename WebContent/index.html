@@ -2,13 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Ethan page</title>
+		<title>Coupon System</title>
 		<link rel="stylesheet" href="main.css" />
+		<script src="script.js"></script>
 	</head>
 	<body>
 		<div id="big_wrapper">
 			<header id="top_header">
-				<h1>Welcome to Ethan page!!</h1>
+				<h1>Welcome to Ethan Coupon System!</h1>
 			</header>
 			
 			<nav id="top_menu">
@@ -21,8 +22,18 @@
 			
 			<div id="new_div">
 				<aside id="side_control">
-					<h4>News</h4>
-					Nothing happends!!
+					<form id="login_form">
+						User Name: <input id="userName" name="userName" type="text" /> <br />
+						Password: <input id="userPass" name="userPass" type="password" /> <br />
+						Type: 
+						<select id="clientType" name="clientType" > 
+							<option value="customer">Customer</option>
+							<option value="company">Company</option>
+							<option value="admin">Admin</option>
+						</select> <br />
+						<input id="sendLogin" name="sendLogin" type="button" onClick="sendLoginForm(this)" value="Submit" />
+					</form>
+					<p id="feedback"></p>
 				</aside>
 				
 				<section id="main_section">

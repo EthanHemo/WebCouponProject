@@ -35,11 +35,15 @@ public class LoginManager {
 
 		switch (clientType) {
 		case "customer":
+			System.out.println("start of login customer");
 			CustomerDBDAO customerDB = new CustomerDBDAO();
-
+			System.out.println("befor if");
 			if (customerDB.login(name, password)) {
+				System.out.println("in if");
 				client = new CustomerFacade(customerDB.getCustomer(name, password));
+				System.out.println("after create client");
 			} else {
+				System.out.println("in else");
 				throw new UserNotFoundException("User not found");
 			}
 			break;

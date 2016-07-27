@@ -211,7 +211,7 @@ public class Testing {
 		try {
 			CouponDBDAO couponDB = new CouponDBDAO();
 			CouponSystem sc = CouponSystem.getInstance();
-			CouponClientFacade client = sc.login("ethanh", "123456", CouponSystem.CUSTOMER);
+			CouponClientFacade client = sc.login("eli", "bbb9", CouponSystem.CUSTOMER);
 			CustomerFacade customer = (CustomerFacade) client;
 
 			System.out.println("\n************ Start Customer Facade check **************");
@@ -274,10 +274,10 @@ public class Testing {
 
 	public static void main(String[] args) {
 
-		 checkAdminFacade();
-		 checkCompanyFacade();
+		 //checkAdminFacade();
+		 //checkCompanyFacade();
 		 checkCustomerFacade();
-		 checkThreadActivity();
+		 //checkThreadActivity();
 		 //testConnectionPoolThreading();
 
 		

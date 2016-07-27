@@ -23,10 +23,11 @@ public class CustomerFacade implements CouponClientFacade {
 	private final Customer customer;
 
 	public CustomerFacade(Customer customer) throws ManagerSQLException {
+		System.out.println("in constractor");
 		this.customer = customer;
 		customerDB = new CustomerDBDAO();
 		couponDB = new CouponDBDAO();
-
+		System.out.println("end constratcor");
 	}
 
 	/**
