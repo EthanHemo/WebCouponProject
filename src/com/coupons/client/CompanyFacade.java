@@ -3,6 +3,8 @@ package com.coupons.client;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.coupons.data.Company;
 import com.coupons.data.Coupon;
 import com.coupons.data.CouponType;

@@ -26,7 +26,7 @@ public class ConnectionPool {
 	// Connection details
 	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/projdb";
 	private static final String DATABASE_USERNAME = "root";
-	private static final String DATABASE_PASSWORD = "Root";
+	private static final String DATABASE_PASSWORD = "password";
 
 	/***
 	 * This function give the instance of the connection pool. if its first use

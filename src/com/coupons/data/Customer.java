@@ -8,10 +8,14 @@ import java.util.Collection;
  * This class contains details of a customer in the system
  */
 public class Customer {
-	private final long id;
+	private long id;
 	private String custName;
 	private String password;
 	private ArrayList<Coupon> coupons;
+	
+	public Customer(){
+		coupons = new ArrayList<Coupon>();
+	}
 	
 	public Customer(long id) {
 		this.id = id; 
@@ -38,6 +42,10 @@ public class Customer {
 		return id;
 	}
 	
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public void setCoupons(Collection<Coupon> coupons) {
 		this.coupons.addAll(coupons);
 	}

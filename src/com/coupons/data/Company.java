@@ -3,20 +3,31 @@ package com.coupons.data;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /*
  * This class contains details of a company in the system
  */
+@XmlRootElement
 public class Company {
 	
-	private final long id;
+	private long id;
 	private String email;
 	private String companyName;
 	private String password;
 	private Collection<Coupon> coupons;
+	public Company(){
+		coupons = new ArrayList<>();
+	}
 
 	public Company(long id) {
 		this.id = id;
 		coupons = new ArrayList<>();
+	}
+	
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getId() {

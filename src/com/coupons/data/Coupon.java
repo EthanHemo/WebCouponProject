@@ -4,12 +4,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /*
  * This class contains details of a coupon in the system
  */
+@XmlRootElement
 public class Coupon {
 
-	private final long id;
+	private long id;
 	private String title;;
 	private Date startDate;
 	private Date endDate;
@@ -19,6 +22,9 @@ public class Coupon {
 	private double price;
 	private String image;
 	
+	public Coupon(){
+		
+	}
 	
 	public Coupon(long id) {
 		this.id = id;
@@ -108,17 +114,10 @@ public class Coupon {
 	public long getId() {
 		return id;
 	}
-	
-//	public void setCoupon(Coupon coupon){
-//		this.title = coupon.getTitle();
-//		this.startDate = coupon.getStartDate();
-//		this.endDate = coupon.getEndDate();
-//		this.amount = coupon.getAmount();
-//		this.type = coupon.getType();
-//		this.message= coupon.getMessage();
-//		this.price = coupon.getPrice();
-//		this.image = coupon.getImage();
-//	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
