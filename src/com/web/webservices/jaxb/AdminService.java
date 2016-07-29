@@ -15,14 +15,21 @@ import com.coupons.exceptions.ManagerThreadException;
 @Path("/admin")
 public class AdminService {
 	
-	//@Context HttpServletRequest request;
+	@Context HttpServletRequest request;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Company sayPlainTextHello() {
 		try {
 			CompanyDBDAO companyDB = new CompanyDBDAO();
-			return companyDB.getCompany(16);
+			if(request.getSession().getAttribute("Visit") == null){
+				request.getSession().setAttribute("Visit", "Yes");
+				return companyDB.getCompany(16);
+			}
+			else{
+				return companyDB.getCompany(17);
+			}
+			
 		} catch (ManagerSQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,6 +41,8 @@ public class AdminService {
 		return null;
 		
 	}
+	
+
 	
 	
 }
