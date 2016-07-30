@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Coupon System</title>
+		
+		<script>
+			var ajax=new XMLHttpRequest();
+			
+			function ajaxAction(){
+				
+				var url="http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCustomer";
+				ajax.onreadystatechange=handleResponse;
+				ajax.onerror= function(e){
+					 alert("Error Status: " + e.target.status);
+				};
+				ajax.open("GET",url,true);
+				ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				ajax.send();
+			}
+			
+			function handleResponse() {
+				if(ajax.readyState==4){
+					if(ajax.status == 200){
+						document.getElementById("result").innerHTML = ajax.responseText;
+					}else {
+						document.getElementById("result").innerHTML = ajax.statusText;
+					}
+					
+				}else{
+					
+				}	
+			}
+
+		</script>
+	</head>
+	<body>
+		<button onClick="ajaxAction()"> Click me!!!</button><br />
+		<div id="result">
+		</div>
+		
+	</body>
+</html>
