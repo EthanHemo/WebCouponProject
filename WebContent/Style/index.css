@@ -1,0 +1,39 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+header, section, footer, aside, nav, article, hgroup{
+	display: block;
+}
+
+body{
+	width:100%; /*important for flexible design, change it size dynamicly*/
+	height:100%;
+}
+
+#wrapper{
+	border:3px solid black;
+	background: rgba(12, 222, 0, 0.1);
+	display: -webkit-box;
+	
+	/*-webkit-box-pack: center;*/
+	position: fixed; /* or absolute */
+  	top: 20%;
+  	left: 30%;
+  	width:600px;
+  	height:300px;
+}
+
+#wrapper>table{
+	margin:25px auto;
+	border-spacing:30px;
+}
+
+select{
+	width:100%;
+}
+
+#buttons_cell{
+	text-align:center;
+}
