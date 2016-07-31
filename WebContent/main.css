@@ -58,6 +58,8 @@ body{
 }
 
 #main_section{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
 	border: 1px solid blue;
 	-webkit-box-flex: 1;
 	margin: 20px;
@@ -65,10 +67,18 @@ body{
 }
 
 article{
- background: #FFFBCC;
- border: 1px solid red;
- padding: 20px;
- margin-bottom:15px;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+ 	background: #FFFBCC;
+ 	border: 1px solid red;
+ 	padding: 20px;
+ 	margin-bottom:15px;
+}
+
+.coupon_content{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-flex: 1;
 }
 
 article footer{
@@ -91,6 +101,11 @@ article footer{
 
 #login_form > input, select{
 	margin: 3px 0 3px 0;
+}
+
+.control_panel ul{
+	list-style: none;
+	
 }
 
 #the_footer{
