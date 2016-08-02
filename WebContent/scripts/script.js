@@ -1,18 +1,22 @@
 /**
  * 
  */
-var ajax=new XMLHttpRequest();
+
+
+var user;
 
 function sendLoginForm(btn){
-		var url="http://localhost:8080/WebCouponProject/TestWebPages";
+		var ajax=new XMLHttpRequest();
+		var url="http://localhost:8080/WebCouponProject/rest/jaxb/login";
 		ajax.onreadystatechange=function(){
 			if(ajax.readyState==4)
-				showFeedback(ajax.responseText); 
+				showFeedback(ajax.response); 
 		};
+		ajax.responseType = "json";
 		ajax.open("POST",url,true);
 		ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		ajax.send(getParameters());
-		showFeedback("Loading")
+		document.getElementById("loadingGif").hidden=false;
 }
 
 function getParameters(){
@@ -25,9 +29,16 @@ function getParameters(){
 	return paramString;
 }
 
-function showFeedback(text){
-	var feedback = document.getElementById("feedback");
-	feedback.innerHTML = text; 
+function showFeedback(result){
+	if(result != null && result.userId != null){
+		alert("Success!!");
+		user = result;
+		alert(user.username);
+	}else{
+		alert("WRONG!!");
+	}
+	document.getElementById("sendLogin").disabled=false;
+	document.getElementById("loadingGif").hidden=true;
 } 
 
 
