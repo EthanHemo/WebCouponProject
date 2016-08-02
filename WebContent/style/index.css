@@ -16,8 +16,7 @@ body{
 	border:3px solid black;
 	background: rgba(12, 222, 0, 0.1);
 	display: -webkit-box;
-	
-	/*-webkit-box-pack: center;*/
+	-webkit-box-pack: center;
 	position: fixed; /* or absolute */
   	top: 20%;
   	left: 30%;
@@ -25,7 +24,7 @@ body{
   	height:300px;
 }
 
-#wrapper>table{
+#wrapper table{
 	margin:25px auto;
 	border-spacing:30px;
 }

@@ -27,14 +27,16 @@ public class AdminService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Company sayPlainTextHello() {
+	public Collection<Company> sayPlainTextHello() {
 		try {
 			CompanyDBDAO companyDB = new CompanyDBDAO();
 			if (request.getSession().getAttribute("Visit") == null) {
 				request.getSession().setAttribute("Visit", "Yes");
-				return companyDB.getCompany(16);
+				//return companyDB.getCompany(16);
+				return companyDB.getAllCompanies();
 			} else {
-				return companyDB.getCompany(17);
+				//return companyDB.getCompany(17);
+				return null;
 			}
 
 		} catch (ManagerSQLException e) {
