@@ -41,4 +41,42 @@ function showFeedback(result){
 	document.getElementById("loadingGif").hidden=true;
 } 
 
+function getCompanies(){
+	var ajax=new XMLHttpRequest();
+	var url="http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCompanies";
+	ajax.onreadystatechange=function(){
+		if(ajax.readyState==4)
+			displayCompanies(ajax.response); 
+	};
+	ajax.responseType = "json";
+	ajax.open("GET",url,true);
+	ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ajax.send();
+	document.getElementById("loadingGif").hidden=false;
+}
+
+function displayCompanies(ajaxJson){
+	var str = "<table border = '1'>"+
+				"<tr>"+
+					"<th>id</th>"+
+					"<th>Company name</th>"+
+					"<th>Company Email</th>"+
+					"<th>Update</th>"+
+					"<th>Delete</th>"+
+				"</tr>";
+	for(var i=0; i< ajaxJson.company.length; i++){
+		var company = ajaxJson.company[i];
+		str+= "<tr>"+
+					"<td>" + company.id  +"</td>"+
+					"<td>"+ company.companyName +"</td>"+
+					"<td>"+ company.email +"</td>"+
+					"<td><input type='button' value='update' onclick='updateCompany(" + company.id  + ")' /></td>"+
+					"<td><input type='button' value='update' onclick='deleteCompany(" + company.id  + ")' /></td>"+
+				"</tr>";
+	}
+	str += "</table>";
+	document.getElementById("main_section").innerHTML=str;
+	document.getElementById("loadingGif").hidden=true;
+}
+
 
