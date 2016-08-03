@@ -211,13 +211,13 @@ public class Testing {
 		try {
 			CouponDBDAO couponDB = new CouponDBDAO();
 			CouponSystem sc = CouponSystem.getInstance();
-			CouponClientFacade client = sc.login("eli", "bbb9", CouponSystem.CUSTOMER);
+			CouponClientFacade client = sc.login("ethanh", "123456", CouponSystem.CUSTOMER);
 			CustomerFacade customer = (CustomerFacade) client;
 
 			System.out.println("\n************ Start Customer Facade check **************");
 			System.out.println(customer.toString());
 
-			Coupon coupon = new Coupon(0);
+			Coupon coupon = new Coupon();
 			Collection<Coupon> coupons = couponDB.getAllCoupons();
 			Iterator<Coupon> iteratorComp = coupons.iterator();
 			while (iteratorComp.hasNext())
@@ -274,9 +274,9 @@ public class Testing {
 
 	public static void main(String[] args) {
 
-		 //checkAdminFacade();
+		 checkAdminFacade();
 		 //checkCompanyFacade();
-		 checkCustomerFacade();
+		 //checkCustomerFacade();
 		 //checkThreadActivity();
 		 //testConnectionPoolThreading();
 

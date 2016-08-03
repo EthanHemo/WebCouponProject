@@ -30,10 +30,20 @@ function getParameters(){
 }
 
 function showFeedback(result){
-	if(result != null && result.userId != null){
+	
+	if(result != null && result.username != null){
 		alert("Success!!");
 		user = result;
 		alert(user.username);
+		
+		var str_login="<p> hello " + user.username + "</p>"+
+				"<input type='button' id='logout' value='logout' onclick='logout()' />";
+		document.getElementById("login_div").innerHTML= str_login;
+		switch(result.role){
+		case "admin":
+			document.getElementById("admin_control_panel").hidden=false;
+		}
+		
 	}else{
 		alert("WRONG!!");
 	}
@@ -61,15 +71,17 @@ function displayCompanies(ajaxJson){
 					"<th>id</th>"+
 					"<th>Company name</th>"+
 					"<th>Company Email</th>"+
+					"<th>Company Password</th>"+
 					"<th>Update</th>"+
 					"<th>Delete</th>"+
 				"</tr>";
 	for(var i=0; i< ajaxJson.company.length; i++){
 		var company = ajaxJson.company[i];
 		str+= "<tr>"+
-					"<td>" + company.id  +"</td>"+
-					"<td>"+ company.companyName +"</td>"+
+					"<td class='company_id'>" + company.id  +"</td>"+
+					"<td class='company_id'>"+ company.companyName +"</td>"+
 					"<td>"+ company.email +"</td>"+
+					"<td>"+ company.password +"</td>"+
 					"<td><input type='button' value='update' onclick='updateCompany(" + company.id  + ")' /></td>"+
 					"<td><input type='button' value='update' onclick='deleteCompany(" + company.id  + ")' /></td>"+
 				"</tr>";

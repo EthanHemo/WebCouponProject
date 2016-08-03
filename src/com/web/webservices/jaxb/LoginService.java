@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +26,7 @@ import com.coupons.exceptions.ManagerSQLException;
 import com.coupons.exceptions.ManagerThreadException;
 import com.coupons.exceptions.UserNotFoundException;
 import com.coupons.mainsystem.CouponSystem;
+import com.web.data.ClientData;
 
 @Path("/login")
 public class LoginService {
@@ -35,26 +37,27 @@ public class LoginService {
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String login(@FormParam("username") String username,
+	public ClientData login(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("role") String role) {
 		System.out.println("Username: " + username);
 		System.out.println("Password: " + password);
 		System.out.println("Role: " + role);
 		JSONObject result = new JSONObject();
+		ClientData clientData = new ClientData();
 
 		CouponClientFacade facade;
 		try {
 			Thread.currentThread().sleep(2000);
 
 			CouponSystem couponSystem = CouponSystem.getInstance();
+			
 
 			switch (role) {
 			case "admin":
-				facade = couponSystem.login(username, password,	CouponSystem.ADMIN);
-				result.put("username", "Admin");
-				result.put("userId", "0");
-				result.put("userRole", "Admin");
+				facade = couponSystem.login(username, password,	CouponSystem.ADMIN);				
+				clientData.setUsername(username);
+				clientData.setRole(role);
 				break;
 			case "company":
 				facade = couponSystem.login(username, password,
@@ -72,7 +75,7 @@ public class LoginService {
 			}
 
 			request.getSession().setAttribute("facade", facade);
-			return result.toString();
+			return clientData;
 		} catch (ManagerSQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -90,6 +93,6 @@ public class LoginService {
 			e.printStackTrace();
 		}
 
-		return result.toString();
+		return clientData;
 	}
 }

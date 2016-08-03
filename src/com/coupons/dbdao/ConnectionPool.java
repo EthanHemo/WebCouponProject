@@ -92,7 +92,6 @@ public class ConnectionPool {
 				throw new ManagerThreadException("Thread Exception: " + e.getMessage());
 			}
 		}
-		System.out.println(pool.size());
 		Iterator<Connection> iterator = pool.iterator();
 		if (iterator.hasNext()) {
 			Connection conn = iterator.next();
