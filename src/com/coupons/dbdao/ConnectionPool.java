@@ -116,7 +116,6 @@ public class ConnectionPool {
 		if (conn == null || !pool.add(conn)) {
 			throw new ManagerThreadException("Error ");
 		}
-		System.out.println(pool.size());
 		notify();
 
 	}

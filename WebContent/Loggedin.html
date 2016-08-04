@@ -1,15 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 	<head>
 		<meta charset="utf-8" />
 		<title>Coupon System</title>
 		<link rel="stylesheet" href="style/main.css" />
+		
 		<script src="scripts/script.js"></script>
+		
 	</head>
 	<body>
 		<div id="big_wrapper">
 			<header id="top_header">
-				<h1>Welcome to Ethan Coupon System!</h1>
+				<h1>Welcome to Ethan Awesome Coupon System!</h1>
 			</header>
 			
 			<!-- av id="top_menu">
@@ -22,7 +24,7 @@
 			
 			<div id="new_div">
 				<aside id="side_control">
-					<div id="login_div">
+					<div id="login_div" >
 						<form id="login_form">
 							User Name: <input id="username" name="username" type="text" /> <br />
 							Password: <input id="password" name="password" type="password" /> <br />
@@ -37,7 +39,22 @@
 						</form>
 					</div>
 					<p id="feedback"></p>
-					<div id="admin_control_panel" class="control_panel" hidden="true">
+					<div id="admin_control_panel" class="control_panel" hidden="true" >
+						<ul>
+							<li onclick="getCompanies()">
+								<a href="#">View all Companies</a>
+							</li>
+							<li><a>Create a company</a></li>
+							<li><a>Update a company</a></li>
+							<li><a>Remove company</a></li>
+							<li><a>View all Customers</a></li>
+							<li><a>Create a Customers</a></li>
+							<li><a>Update a Customers</a></li>
+							<li><a>Remove Customers</a></li>
+							
+						</ul>
+					</div>
+					<div id="customer_control_panel" class="control_panel" hidden="true" >
 						<ul>
 							<li onclick="getCompanies()">
 								<a href="#">View all Companies</a>
@@ -55,8 +72,48 @@
 				</aside>
 				
 				<section id="main_section">
-					<h1>Coupons</h1>
-					<article>
+				
+					<!-- Show companies -->
+					<div id="display_companies">
+						<table id="company_table" border="1">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Company Name</th>
+									<th>Company Email</th>
+									<th>Password</th>
+									<th>Update</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody id="company_table_body">
+								
+							</tbody>
+						</table>
+						<form>
+							<table>
+								<tr>
+									<td>Company name:</td>
+									<td><input id="company_name" name="company_name" /></td>
+								</tr>
+								<tr>
+									<td>Company email:</td>
+									<td><input id="company_email" name="company_email"/></td>
+								</tr>
+								<tr>
+									<td>Company password:</td> 
+									<td><input id="company_password" name="company_password" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="company_table_button"><input type="button" value="Create" onclick="createCompany()"/></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					
+					<!--h1>Coupons</h1>
+					< article>
 						<img src="images\photo6.jpg" />
 						<div class="coupon_content">
 						<header>
@@ -82,7 +139,7 @@
 						<footer>
 							<p>- written by Ethan Hemo</p>
 						</footer>
-					</article>
+					</article -->
 				</section>
 				
 				

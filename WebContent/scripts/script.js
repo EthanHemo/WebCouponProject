@@ -32,9 +32,7 @@ function getParameters(){
 function showFeedback(result){
 	
 	if(result != null && result.username != null){
-		alert("Success!!");
 		user = result;
-		alert(user.username);
 		
 		var str_login="<p> hello " + user.username + "</p>"+
 				"<input type='button' id='logout' value='logout' onclick='logout()' />";
@@ -47,8 +45,8 @@ function showFeedback(result){
 	}else{
 		alert("WRONG!!");
 	}
-	document.getElementById("sendLogin").disabled=false;
-	document.getElementById("loadingGif").hidden=true;
+	//document.getElementById("sendLogin").disabled=false;
+	//document.getElementById("loadingGif").hidden=true;
 } 
 
 function getCompanies(){
@@ -66,15 +64,8 @@ function getCompanies(){
 }
 
 function displayCompanies(ajaxJson){
-	var str = "<table border = '1'>"+
-				"<tr>"+
-					"<th>id</th>"+
-					"<th>Company name</th>"+
-					"<th>Company Email</th>"+
-					"<th>Company Password</th>"+
-					"<th>Update</th>"+
-					"<th>Delete</th>"+
-				"</tr>";
+	var str = "";
+	alert(JSON.stringify(ajaxJson.company[1]));
 	for(var i=0; i< ajaxJson.company.length; i++){
 		var company = ajaxJson.company[i];
 		str+= "<tr>"+
@@ -86,9 +77,47 @@ function displayCompanies(ajaxJson){
 					"<td><input type='button' value='update' onclick='deleteCompany(" + company.id  + ")' /></td>"+
 				"</tr>";
 	}
-	str += "</table>";
-	document.getElementById("main_section").innerHTML=str;
+	document.getElementById("company_table_body").innerHTML=str;
 	document.getElementById("loadingGif").hidden=true;
+}
+
+function createCompany(){
+	var newCompanyName = document.getElementById("company_name").value;
+	var newCompanyEmail = document.getElementById("company_email").value;
+	var newCompanyPassword = document.getElementById("company_password").value;
+	var newCompany = {
+			companyName : newCompanyName,
+			email : newCompanyEmail,
+			password : newCompanyPassword
+	};
+	var item = {
+			company: newCompany
+	}
+	
+	var test = {
+			"company": {
+				"companyName":"aaa",
+				"email":"aaa",
+				"password":"aaa"
+			}
+	}
+	
+	var ajax=new XMLHttpRequest();
+	var url="http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany";
+	ajax.onreadystatechange=function(){
+		if(ajax.readyState==4)
+			createCompanyCallback(ajax.response); 
+	};
+	//ajax.responseType = "json";
+	ajax.open("POST",url,true);
+	ajax.setRequestHeader("Content-Type", "application/json");
+	alert(JSON.stringify(test))
+	ajax.send(JSON.stringify(test));
+	
+}
+
+function createCompanyCallback(json){
+	
 }
 
 

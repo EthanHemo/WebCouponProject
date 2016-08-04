@@ -18,10 +18,14 @@ import javax.ws.rs.core.MediaType;
 
 
 
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.coupons.client.CompanyFacade;
 import com.coupons.client.CouponClientFacade;
+import com.coupons.client.CustomerFacade;
 import com.coupons.exceptions.ManagerSQLException;
 import com.coupons.exceptions.ManagerThreadException;
 import com.coupons.exceptions.UserNotFoundException;
@@ -62,37 +66,25 @@ public class LoginService {
 			case "company":
 				facade = couponSystem.login(username, password,
 						CouponSystem.COMPANY);
+				CompanyFacade companyFacade = (CompanyFacade)facade;
+				clientData.setUsername(companyFacade.getCompany().getCompanyName());
 				break;
 			case "customer":
 				facade = couponSystem.login(username, password,
 						CouponSystem.CUSTOMER);
-				result.put("username", "Admin");
-				result.put("userId", "0");
-				result.put("userRole", "Admin");
+				CustomerFacade customerFacade = (CustomerFacade)facade;
+				clientData.setUsername(customerFacade.getCustomer().getCustName());
 				break;
 			default:
 				throw new UserNotFoundException("No such type");
 			}
-
+			clientData.setRole(role);
 			request.getSession().setAttribute("facade", facade);
 			return clientData;
-		} catch (ManagerSQLException e1) {
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UserNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} 
 		return clientData;
 	}
 }

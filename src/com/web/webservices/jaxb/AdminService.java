@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBElement;
 
 import com.coupons.client.AdminFacade;
 import com.coupons.data.Company;
@@ -58,7 +59,7 @@ public class AdminService {
 	public void createCompany(Company company) {
 
 		try {
-			if (request.getSession().getAttribute("Facade") == null) {
+			if (request.getSession().getAttribute("Facade") != null) {
 				AdminFacade admin = (AdminFacade) request.getSession().getAttribute("Facade");
 				admin.createCompany(company);
 			} else {
