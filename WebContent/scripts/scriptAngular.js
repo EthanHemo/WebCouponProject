@@ -16,24 +16,14 @@ function CouponSystemController($scope, $http) {
 		$scope.login_panel = true;
 		$scope.welcome_panel = false;
 		$scope.admin_panel = false;
+		$scope.company_panel = false;
+		$scope.customer_panel = false;
 	};
 	
 	$scope.resetContent = function(){
 		$scope.company_display = false;
 		$scope.customer_display = false;
-	};
-	
-	$scope.addContact = function() {
-		if ($scope.firstName && $scope.lastName && $scope.number) {
-			$scope.contacts.push({
-				firstName : $scope.firstName,
-				lastName : $scope.lastName,
-				number : $scope.number
-			});
-			$scope.firstName = '';
-			$scope.lastName = '';
-			$scope.number = '';
-		}
+		$scope.coupons_display = false;
 	};
 	
 	
@@ -60,8 +50,15 @@ function CouponSystemController($scope, $http) {
             	$scope.welcome_panel = true;
             	switch(data.role){
 	            	case 'admin':
-	            		alert("in admin");
 	            		$scope.admin_panel = true;
+	            		break;
+            		
+	            	case 'company':
+	            		$scope.company_panel = true;
+	            		break;
+	            	
+	            	case 'company':
+	            		$scope.customer_panel = true;
 	            		break;
             	}
               }else {
@@ -73,6 +70,7 @@ function CouponSystemController($scope, $http) {
       
 	};
 	
+	/******************* Admin functions ******************************/
 	
 	$scope.getCompanies = function(){
 		$scope.resetContent();
@@ -90,7 +88,7 @@ function CouponSystemController($scope, $http) {
 			});
 	}
 	
-	$scope.getCcustomers = function(){
+	$scope.getCustomers = function(){
 		$scope.resetContent();
 		$scope.customer_display = true;
 		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCustomer").success(function(response){
@@ -98,10 +96,27 @@ function CouponSystemController($scope, $http) {
 		});
 	}
 	
+	/******************* Company functions ******************************/
+	
+	$scope.getCoupons = function(){
+		$scope.resetContent();
+		$scope.coupons_display = true;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getAllCoupon").success(function(response){
+			if(response.coupon.length){
+				$scope.coupons = response.coupon;
+			}
+			else{
+				$scope.coupons = [];
+				$scope.coupons.push(response.coupon);
+			}
+		});
+		
+	}
+	
 	
 	$scope.companies;
 	$scope.customers;
-	$scope.coupons;
+	$scope.coupons =[];
 	$scope.user;
 	$scope.resetLogin();
 	

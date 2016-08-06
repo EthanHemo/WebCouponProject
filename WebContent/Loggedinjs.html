@@ -50,28 +50,38 @@
 								<a href="#">Manage companies</a>
 							</li>
 							
-							<li ng-click="getCcustomers()">
+							<li ng-click="getCustomers()">
 								<a>View all Customers</a>
 							</li>
 
 							
 						</ul>
 					</div>
-					<div id="customer_control_panel" class="control_panel" hidden="true" >
+					<div id="company_control_panel" class="control_panel" ng-show="company_panel" >
+						<ul>
+							<li ng-click="getCoupons()">
+								<a href="#">Manage Coupons</a>
+							</li>
+							
+							
+
+							
+						</ul>
+					</div>
+					<div id="customer_control_panel" class="control_panel" ng-show="customer_panel" >
 						<ul>
 							<li onclick="getCompanies()">
 								<a href="#">View all Companies</a>
 							</li>
 							<li><a>Create a company</a></li>
 							<li><a>Update a company</a></li>
-							<li><a>Remove company</a></li>
-							<li><a>View all Customers</a></li>
-							<li><a>Create a Customers</a></li>
-							<li><a>Update a Customers</a></li>
-							<li><a>Remove Customers</a></li>
+
 							
 						</ul>
 					</div>
+					
+					
+					
 				</aside>
 				
 				<section id="main_section">
@@ -124,7 +134,7 @@
 					</div>
 					
 					<div id="display_customers" ng-show="customer_display">
-						<table id="company_table" border="1">
+						<table id="customers_table" border="1">
 							<thead>
 								<tr>
 									<th>ID</th>
@@ -139,8 +149,60 @@
 									<td >{{customer.id}}</td>
 									<td >{{customer.custName}}</td>
 									<td>{{customer.password}}</td>
-									<td><input type='button' value='update' onclick='updateCompany({{company.id}})' /></td>
-									<td><input type='button' value='update' onclick='deleteCompany({{company.id}})' /></td>
+									<td><input type='button' value='update' onclick='updateCompany({{customer.id}})' /></td>
+									<td><input type='button' value='update' onclick='deleteCompany({{customer.id}})' /></td>
+								</tr>
+							</tbody>
+						</table>
+						<form ng-submit="addCompany()">
+							<table>
+								<tr>
+									<td>Customer name:</td>
+									<td><input ng-model="newCustomer.custName" id="customer_name" name="customer_name" /></td>
+								</tr>
+								<tr>
+									<td>Customer password:</td> 
+									<td><input ng-model="newCustomer.password" id="customer_passowrd" name="customer_passowrd" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="company_table_button">
+										<button id="createCustomer">Create</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					<div id="display_coupons" ng-show="coupons_display">
+						<table id="coupons_table" border="1">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Title</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>Amount</th>
+									<th>Type</th>
+									<th>Message</th>
+									<th>Price</th>
+									<th>Image</th>
+									<th>Update</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody id="coupons_table_body">
+								<tr ng-repeat="coupon in coupons">
+									<td >{{coupon.id}}</td>
+									<td >{{coupon.title}}</td>
+									<td>{{coupon.startDate}}</td>
+									<td>{{coupon.endDate}}</td>
+									<td>{{coupon.amount}}</td>
+									<td>{{coupon.type}}</td>
+									<td>{{coupon.message}}</td>
+									<td>{{coupon.price}}</td>
+									<td>{{coupon.image}}</td>
+									<td><input type='button' value='update' onclick='updateCoupon({{coupon.id}})' /></td>
+									<td><input type='button' value='update' onclick='deleteCoupon({{coupon.id}})' /></td>
 								</tr>
 							</tbody>
 						</table>
