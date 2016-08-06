@@ -103,7 +103,6 @@ public class AdminService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Company> getAllCompanies(){
-		System.out.println("We are in");
 		try{
 			if(request.getSession().getAttribute("facade")!=null){
 				System.out.println("threr is a session");
@@ -155,7 +154,24 @@ public class AdminService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Customer> getAllCustomer() throws Exception{
-		throw new Exception("My exception");
+		try{
+			if(request.getSession().getAttribute("facade")!=null){
+				System.out.println("threr is a session");
+				AdminFacade facade = (AdminFacade)request.getSession().getAttribute("facade");
+				return facade.getAllCustomer();
+			}
+			else{
+				System.out.println("threr is NOT session");
+				AdminFacade facade = new AdminFacade();
+				return facade.getAllCustomer();
+			}
+		} catch (ManagerSQLException e) {
+			e.printStackTrace();
+		} catch (ManagerThreadException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }

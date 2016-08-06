@@ -3,10 +3,13 @@ package com.coupons.data;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /*
  * This class contains details of a customer in the system
  */
+@XmlRootElement
 public class Customer {
 	private long id;
 	private String custName;

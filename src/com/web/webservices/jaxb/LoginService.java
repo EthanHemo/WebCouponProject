@@ -49,10 +49,11 @@ public class LoginService {
 		System.out.println("Role: " + role);
 		JSONObject result = new JSONObject();
 		ClientData clientData = new ClientData();
+		
 
 		CouponClientFacade facade;
 		try {
-			Thread.currentThread().sleep(2000);
+			Thread.currentThread().sleep(50);
 
 			CouponSystem couponSystem = CouponSystem.getInstance();
 			
@@ -82,9 +83,24 @@ public class LoginService {
 			request.getSession().setAttribute("facade", facade);
 			return clientData;
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
 		return clientData;
+	}
+	
+	@GET
+	@Path("loginTest")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ClientData test(){
+		ClientData data = new ClientData();
+		data.setRole("admin");
+		data.setUsername("Ethan");
+		return data;
+	}
+	
+	@GET
+	@Path("isConnected")
+	public String isConnected(){
+		return String.valueOf(request.getSession().getAttribute("facade") != null);
 	}
 }

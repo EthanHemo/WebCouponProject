@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" ng-app  ng-controller="CouponSystemController">
+	<head>
+		<meta charset="utf-8" />
+		<title>Coupon System</title>
+		<link rel="stylesheet" href="style/main.css" />
+		
+		<script src="scripts/scriptAngular.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+		
+	</head>
+	<body>
+		<div id="big_wrapper">
+			<header id="top_header">
+				<h1>Welcome to Ethan Awesome Coupon System!</h1>
+			</header>
+			
+			<!-- av id="top_menu">
+				<ul>
+					<li>Home</li>
+					<li>Tutorials</li>
+					<li>Podcast</li>
+				</ul>
+			</nav >-->
+			
+			<div id="new_div">
+				<aside id="side_control">
+					<div id="login_div" ng-show="login_panel" >
+						<form id="login_form" ng-submit="submitLogin()">
+							User Name: <input ng-model="login.username" id="username" name="username" type="text" /> <br />
+							Password: <input ng-model="login.password" id="password" name="password" type="password" /> <br />
+							Type: 
+							<select ng-model="login.role" id="role" name="role" > 
+								<option value="customer">Customer</option>
+								<option value="company">Company</option>
+								<option value="admin">Admin</option>
+							</select> <br />
+							<button id="sendLogin" name="sendLogin">Submit</button>
+							<img src="images\loading.gif" id="loadingGif" hidden="true" width="15px;" />
+						</form>
+					</div>
+					<div id="welcome_div" ng-show="welcome_panel">
+						<p>Hello {{user.username}}</p><br />
+						<button id="logout" onclick="logout()">Logout</button>
+					</div>
+					<p id="feedback"></p>
+					<div id="admin_control_panel" class="control_panel" ng-show="admin_panel" >
+						<ul>
+							<li ng-click="getCompanies()">
+								<a href="#">Manage companies</a>
+							</li>
+							
+							<li ng-click="getCcustomers()">
+								<a>View all Customers</a>
+							</li>
+
+							
+						</ul>
+					</div>
+					<div id="customer_control_panel" class="control_panel" hidden="true" >
+						<ul>
+							<li onclick="getCompanies()">
+								<a href="#">View all Companies</a>
+							</li>
+							<li><a>Create a company</a></li>
+							<li><a>Update a company</a></li>
+							<li><a>Remove company</a></li>
+							<li><a>View all Customers</a></li>
+							<li><a>Create a Customers</a></li>
+							<li><a>Update a Customers</a></li>
+							<li><a>Remove Customers</a></li>
+							
+						</ul>
+					</div>
+				</aside>
+				
+				<section id="main_section">
+				
+					<!-- Show companies -->
+					<div id="display_companies" ng-show="company_display">
+						<table id="company_table" border="1">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Company Name</th>
+									<th>Company Email</th>
+									<th>Password</th>
+									<th>Update</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody id="company_table_body">
+								<tr ng-repeat="company in companies">
+									<td class='company_id'>{{company.id}}</td>
+									<td class='company_id'>{{company.companyName}}</td>
+									<td>{{company.email}}</td>
+									<td>{{company.password}}</td>
+									<td><input type='button' value='update' onclick='updateCompany({{company.id}})' /></td>
+									<td><input type='button' value='update' onclick='deleteCompany({{company.id}})' /></td>
+								</tr>
+							</tbody>
+						</table>
+						<form ng-submit="addCompany()">
+							<table>
+								<tr>
+									<td>Company name:</td>
+									<td><input ng-model="newCompany.companyName" id="company_name" name="company_name" /></td>
+								</tr>
+								<tr>
+									<td>Company email:</td>
+									<td><input ng-model="newCompany.email" id="company_email" name="company_email"/></td>
+								</tr>
+								<tr>
+									<td>Company password:</td> 
+									<td><input ng-model="newCompany.password" id="company_password" name="company_password" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="company_table_button">
+										<button id="createCompany">Create</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					<div id="display_customers" ng-show="customer_display">
+						<table id="company_table" border="1">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>User Name</th>
+									<th>Password</th>
+									<th>Update</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody id="customers_table_body">
+								<tr ng-repeat="customer in customers">
+									<td >{{customer.id}}</td>
+									<td >{{customer.custName}}</td>
+									<td>{{customer.password}}</td>
+									<td><input type='button' value='update' onclick='updateCompany({{company.id}})' /></td>
+									<td><input type='button' value='update' onclick='deleteCompany({{company.id}})' /></td>
+								</tr>
+							</tbody>
+						</table>
+						<form ng-submit="addCompany()">
+							<table>
+								<tr>
+									<td>Customer name:</td>
+									<td><input ng-model="newCustomer.custName" id="customer_name" name="customer_name" /></td>
+								</tr>
+								<tr>
+									<td>Customer password:</td> 
+									<td><input ng-model="newCustomer.password" id="customer_passowrd" name="customer_passowrd" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="company_table_button">
+										<button id="createCustomer">Create</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					
+					
+					
+				</section>
+				
+				
+			</div>
+			<footer id="the_footer">
+				Copyrights Ethan page! 2015
+			</footer>
+		</div>
+	</body>
+</html>

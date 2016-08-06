@@ -4,6 +4,7 @@
 
 
 var user;
+var sentCompany;
 
 function sendLoginForm(btn){
 		var ajax=new XMLHttpRequest();
@@ -65,7 +66,8 @@ function getCompanies(){
 
 function displayCompanies(ajaxJson){
 	var str = "";
-	alert(JSON.stringify(ajaxJson.company[1]));
+	//alert(JSON.stringify(ajaxJson.company[1]));
+	sentCompany = ajaxJson.company[0];
 	for(var i=0; i< ajaxJson.company.length; i++){
 		var company = ajaxJson.company[i];
 		str+= "<tr>"+
@@ -111,8 +113,8 @@ function createCompany(){
 	//ajax.responseType = "json";
 	ajax.open("POST",url,true);
 	ajax.setRequestHeader("Content-Type", "application/json");
-	alert(JSON.stringify(test))
-	ajax.send(JSON.stringify(test));
+	alert(JSON.stringify(sentCompany))
+	ajax.send(JSON.stringify(sentCompany));
 	
 }
 
