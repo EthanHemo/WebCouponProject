@@ -6,11 +6,9 @@ var user;
 var sentCompany;
 var ajaxCompanies;
 
-function LoginController($scope,$http){
-	$scope.login_div.hidden="true";
-}
+var app = angular.module('myApp', []);
 
-function CouponSystemController($scope, $http) {
+app.controller('CouponSystemController', function CouponSystemController($scope, $http) {
 		
 	$scope.resetLogin = function(){
 		$scope.login_panel = true;
@@ -24,6 +22,7 @@ function CouponSystemController($scope, $http) {
 		$scope.company_display = false;
 		$scope.customer_display = false;
 		$scope.coupons_display = false;
+		$scope.submitCation = "Create";
 	};
 	
 	
@@ -70,6 +69,16 @@ function CouponSystemController($scope, $http) {
       
 	};
 	
+	$scope.logout = function(){
+		alert("logout!");
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/login/logout").then(function(response){
+			$scope.resetContent();
+			$scope.resetLogin();
+		});
+	}
+	
+	
+	
 	/******************* Admin functions ******************************/
 	
 	$scope.getCompanies = function(){
@@ -86,7 +95,7 @@ function CouponSystemController($scope, $http) {
 			.success(function(){
 				alert("Add?");
 			});
-	}
+	};
 	
 	$scope.getCustomers = function(){
 		$scope.resetContent();
@@ -94,6 +103,30 @@ function CouponSystemController($scope, $http) {
 		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCustomer").success(function(response){
 			$scope.customers = response.customer;
 		});
+	};
+	
+	$scope.updateCompany = function(index){
+		
+		/*
+		if($scope.newCompany.id){
+			alert($scope.newCompany.id);
+		}
+		*/
+			
+		$scope.newCompany = $scope.companies[index];
+		alert($scope.newCompany.id);
+		$scope.submitCation = "Update";
+		/*
+		$scope.newCompany.email = $scope.companies[index].email;
+		$scope.newCompany.password = $scope.companies[index].password;
+		*/
+	};
+	
+	$scope.sendNewCompany = function(){
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany", $scope.newCompany)
+				.success(function(response){
+					alert("success");
+				})
 	}
 	
 	/******************* Company functions ******************************/
@@ -114,6 +147,9 @@ function CouponSystemController($scope, $http) {
 	}
 	
 	
+	/******************* Startup functions ******************************/
+	
+	
 	$scope.companies;
 	$scope.customers;
 	$scope.coupons =[];
@@ -122,4 +158,4 @@ function CouponSystemController($scope, $http) {
 	
 	$scope.resetContent();
 	
-}
+});

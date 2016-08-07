@@ -103,4 +103,11 @@ public class LoginService {
 	public String isConnected(){
 		return String.valueOf(request.getSession().getAttribute("facade") != null);
 	}
+	
+	@GET
+	@Path("logout")
+	public void logout(){
+		System.out.println("In login");
+		request.getSession().invalidate();
+	}
 }

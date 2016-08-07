@@ -25,6 +25,8 @@ public class AdminService {
 
 	@Context
 	HttpServletRequest request;
+	
+	private static final String FACADE_PARAMETER = "facade";
 
 	
 	@GET
@@ -53,7 +55,7 @@ public class AdminService {
 
 	}
 
-	@Path("/createCompany")
+/*	@Path("/createCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void createCompany(Company company) {
@@ -71,6 +73,31 @@ public class AdminService {
 		} catch (ManagerSQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}*/
+	
+	@Path("/createCompany")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void createCompany(@QueryParam("id") long id,
+								@QueryParam("companyName") String companyName,
+								@QueryParam("email") String email,
+								@QueryParam("password") String password) {
+
+		System.out.println("In create");
+		if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
+			
+			/*
+			AdminFacade admin = (AdminFacade) request.getSession().getAttribute(FACADE_PARAMETER);
+			Company company = new Company();
+			company.setId(id);
+			company.setCompanyName(companyName);
+			company.setEmail(email);
+			company.setPassword(password);
+			admin.createCompany(company);
+			*/
+		} else {
+			System.out.println("no facade");
 		}
 	}
 	
@@ -104,9 +131,9 @@ public class AdminService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Company> getAllCompanies(){
 		try{
-			if(request.getSession().getAttribute("facade")!=null){
+			if(request.getSession().getAttribute(FACADE_PARAMETER)!=null){
 				System.out.println("threr is a session");
-				AdminFacade facade = (AdminFacade)request.getSession().getAttribute("facade");
+				AdminFacade facade = (AdminFacade)request.getSession().getAttribute(FACADE_PARAMETER);
 				return facade.getAllCompanies();
 			}
 			else{

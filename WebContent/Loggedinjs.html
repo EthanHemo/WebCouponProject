@@ -1,12 +1,13 @@
 <!doctype html>
-<html lang="en" ng-app  ng-controller="CouponSystemController">
+<html lang="en" ng-app="myApp"  ng-controller="CouponSystemController">
 	<head>
 		<meta charset="utf-8" />
 		<title>Coupon System</title>
 		<link rel="stylesheet" href="style/main.css" />
 		
 		<script src="scripts/scriptAngular.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+		<!-- script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script-->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
 		
 	</head>
 	<body>
@@ -41,7 +42,7 @@
 					</div>
 					<div id="welcome_div" ng-show="welcome_panel">
 						<p>Hello {{user.username}}</p><br />
-						<button id="logout" onclick="logout()">Logout</button>
+						<button id="logout" ng-click="logout()">Logout</button>
 					</div>
 					<p id="feedback"></p>
 					<div id="admin_control_panel" class="control_panel" ng-show="admin_panel" >
@@ -59,7 +60,7 @@
 					</div>
 					<div id="company_control_panel" class="control_panel" ng-show="company_panel" >
 						<ul>
-							<li ng-click="getCoupons()">
+							<li onclick="getCoupons()">
 								<a href="#">Manage Coupons</a>
 							</li>
 							
@@ -101,16 +102,17 @@
 							</thead>
 							<tbody id="company_table_body">
 								<tr ng-repeat="company in companies">
-									<td class='company_id'>{{company.id}}</td>
-									<td class='company_id'>{{company.companyName}}</td>
+									<td>{{company.id}}</td>
+									<td>{{company.companyName}}</td>
 									<td>{{company.email}}</td>
 									<td>{{company.password}}</td>
-									<td><input type='button' value='update' onclick='updateCompany({{company.id}})' /></td>
-									<td><input type='button' value='update' onclick='deleteCompany({{company.id}})' /></td>
+									<td><input type='button' value='update' ng-click='updateCompany($index)' /></td>
+									<td><input type='button' value='delete' ng-click='deleteCompany($index)' /></td>
 								</tr>
 							</tbody>
 						</table>
 						<form ng-submit="addCompany()">
+							<input type="hidden"  ng-value="newCompany.id" id="company_id" name="company_id" />
 							<table>
 								<tr>
 									<td>Company name:</td>
@@ -126,7 +128,7 @@
 								</tr>
 								<tr>
 									<td colspan="2" id="company_table_button">
-										<button id="createCompany">Create</button>
+										<button id="sendCompany">{{submitCation}}</button>
 									</td>
 								</tr>
 							</table>
@@ -149,8 +151,8 @@
 									<td >{{customer.id}}</td>
 									<td >{{customer.custName}}</td>
 									<td>{{customer.password}}</td>
-									<td><input type='button' value='update' onclick='updateCompany({{customer.id}})' /></td>
-									<td><input type='button' value='update' onclick='deleteCompany({{customer.id}})' /></td>
+									<td><input type='button' value='update' onclick='updateCompany($index)' /></td>
+									<td><input type='button' value='update' onclick='deleteCompany($index)' /></td>
 								</tr>
 							</tbody>
 						</table>
@@ -173,6 +175,7 @@
 						</form>
 					</div>
 					
+					
 					<div id="display_coupons" ng-show="coupons_display">
 						<table id="coupons_table" border="1">
 							<thead>
@@ -194,15 +197,15 @@
 								<tr ng-repeat="coupon in coupons">
 									<td >{{coupon.id}}</td>
 									<td >{{coupon.title}}</td>
-									<td>{{coupon.startDate}}</td>
-									<td>{{coupon.endDate}}</td>
+									<td>{{coupon.startDate | date:'dd-MM-yyyy'}}</td>
+									<td>{{coupon.endDate | date:'dd-MM-yyyy'}}</td>
 									<td>{{coupon.amount}}</td>
 									<td>{{coupon.type}}</td>
 									<td>{{coupon.message}}</td>
 									<td>{{coupon.price}}</td>
 									<td>{{coupon.image}}</td>
-									<td><input type='button' value='update' onclick='updateCoupon({{coupon.id}})' /></td>
-									<td><input type='button' value='update' onclick='deleteCoupon({{coupon.id}})' /></td>
+									<td><input type='button' value='update' onclick='updateCoupon($index)' /></td>
+									<td><input type='button' value='delete' onclick='deleteCoupon($index)' /></td>
 								</tr>
 							</tbody>
 						</table>
