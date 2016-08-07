@@ -6,9 +6,11 @@ var user;
 var sentCompany;
 var ajaxCompanies;
 
-var app = angular.module('myApp', []);
+function LoginController($scope,$http){
+	$scope.login_div.hidden="true";
+}
 
-app.controller('CouponSystemController', function CouponSystemController($scope, $http) {
+function CouponSystemController($scope, $http) {
 		
 	$scope.resetLogin = function(){
 		$scope.login_panel = true;
@@ -158,4 +160,4 @@ app.controller('CouponSystemController', function CouponSystemController($scope,
 	
 	$scope.resetContent();
 	
-});
+}
