@@ -35,6 +35,8 @@ import com.web.data.ClientData;
 @Path("/login")
 public class LoginService {
 
+	private static final String FACADE_PARAMETER = "facade";
+	
 	@Context
 	HttpServletRequest request;
 
@@ -80,7 +82,7 @@ public class LoginService {
 				throw new UserNotFoundException("No such type");
 			}
 			clientData.setRole(role);
-			request.getSession().setAttribute("facade", facade);
+			request.getSession().setAttribute(FACADE_PARAMETER, facade);
 			return clientData;
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -101,7 +103,7 @@ public class LoginService {
 	@GET
 	@Path("isConnected")
 	public String isConnected(){
-		return String.valueOf(request.getSession().getAttribute("facade") != null);
+		return String.valueOf(request.getSession().getAttribute(FACADE_PARAMETER) != null);
 	}
 	
 	@GET

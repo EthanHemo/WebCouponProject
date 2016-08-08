@@ -3,6 +3,9 @@ package com.coupons.data;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /*
@@ -16,6 +19,7 @@ public class Company {
 	private String companyName;
 	private String password;
 	private Collection<Coupon> coupons;
+	
 	public Company(){
 		coupons = new ArrayList<>();
 	}

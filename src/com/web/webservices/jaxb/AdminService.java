@@ -55,14 +55,14 @@ public class AdminService {
 
 	}
 
-/*	@Path("/createCompany")
+	@Path("/createCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void createCompany(Company company) {
-
+		System.out.println(company.toString());
 		try {
-			if (request.getSession().getAttribute("Facade") != null) {
-				AdminFacade admin = (AdminFacade) request.getSession().getAttribute("Facade");
+			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
+				AdminFacade admin = (AdminFacade) request.getSession().getAttribute(FACADE_PARAMETER);
 				admin.createCompany(company);
 			} else {
 
@@ -74,11 +74,11 @@ public class AdminService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 	
+	/*
 	@Path("/createCompany")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public void createCompany(@QueryParam("id") long id,
 								@QueryParam("companyName") String companyName,
 								@QueryParam("email") String email,
@@ -86,8 +86,12 @@ public class AdminService {
 
 		System.out.println("In create");
 		if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
+			System.out.println(id);
+			System.out.println(companyName);
+			System.out.println(email);
+			System.out.println(password);
 			
-			/*
+			
 			AdminFacade admin = (AdminFacade) request.getSession().getAttribute(FACADE_PARAMETER);
 			Company company = new Company();
 			company.setId(id);
@@ -95,12 +99,12 @@ public class AdminService {
 			company.setEmail(email);
 			company.setPassword(password);
 			admin.createCompany(company);
-			*/
+			
 		} else {
 			System.out.println("no facade");
 		}
 	}
-	
+	*/
 	
 	@Path("/removeCompany")
 	@POST

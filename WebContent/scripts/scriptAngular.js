@@ -11,7 +11,15 @@ function LoginController($scope,$http){
 }
 
 function CouponSystemController($scope, $http) {
-		
+	
+	/******************* Utilities functions ******************************/
+	$scope.getCompanyForm = function(){
+		return "id=" + $scope.newCompany.id +
+				"&companyName=" + $scope.newCompany.companyName +
+				"&email=" + $scope.newCompany.email +
+				"&password=" + $scope.newCompany.password;
+	} 	
+	
 	$scope.resetLogin = function(){
 		$scope.login_panel = true;
 		$scope.welcome_panel = false;
@@ -92,10 +100,14 @@ function CouponSystemController($scope, $http) {
 	};
 	
 	$scope.addCompany = function(){
-		alert(JSON.stringify($scope.newCompany));
-		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany", {'company' : $scope.newCompany})
+		alert( $scope.getCompanyForm());
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany", $scope.newCompany)
 			.success(function(){
-				alert("Add?");
+				$scope.getCompanies();
+				$scope.newCompany.id = '';
+				$scope.newCompany.companyName = '';
+				$scope.newCompany.email = '';
+				$scope.newCompany.password = '';
 			});
 	};
 	
@@ -129,6 +141,10 @@ function CouponSystemController($scope, $http) {
 				.success(function(response){
 					alert("success");
 				})
+	}
+	
+	$scope.resetCompany = function(){
+		
 	}
 	
 	/******************* Company functions ******************************/
