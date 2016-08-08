@@ -1,12 +1,13 @@
 <!doctype html>
-<html lang="en" ng-app  ng-controller="CouponSystemController">
+<html lang="en" ng-app="app"  ng-controller="CouponSystemController">
 	<head>
 		<meta charset="utf-8" />
 		<title>Coupon System</title>
 		<link rel="stylesheet" href="style/main.css" />
 		
-		<script src="scripts/scriptAngular.js"></script>
+		
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+		<script src="scripts/scriptAngular.js"></script>
 		
 	</head>
 	<body>
@@ -115,11 +116,11 @@
 							<table>
 								<tr>
 									<td>Company name:</td>
-									<td><input ng-model="newCompany.companyName" id="company_name" name="company_name" /></td>
+									<td><input ng-model="newCompany.companyName" ng-disabled="savedProperty" id="company_name" name="company_name" /></td>
 								</tr>
 								<tr>
 									<td>Company email:</td>
-									<td><input ng-model="newCompany.email" id="company_email" name="company_email"/></td>
+									<td><input  ng-model="newCompany.email" ng-disabled="savedProperty" id="company_email" name="company_email"/></td>
 								</tr>
 								<tr>
 									<td>Company password:</td> 
@@ -128,7 +129,7 @@
 								<tr>
 									<td colspan="2" id="company_table_button">
 										<button id="sendCompany">{{submitCation}}</button>
-										<button id="sendCompany" ng-click="resetCompany()">Cancel</button>
+										<input type="button" id="sendCompany" ng-click="resetCompany()" value="Cancel" />
 									</td>
 								</tr>
 							</table>

@@ -5,12 +5,9 @@
 var user;
 var sentCompany;
 var ajaxCompanies;
+var app = angular.module('app',[]);
 
-function LoginController($scope,$http){
-	$scope.login_div.hidden="true";
-}
-
-function CouponSystemController($scope, $http) {
+app.controller("CouponSystemController", function($scope, $http){
 	
 	/******************* Utilities functions ******************************/
 	$scope.getCompanyForm = function(){
@@ -121,19 +118,11 @@ function CouponSystemController($scope, $http) {
 	
 	$scope.updateCompany = function(index){
 		
-		/*
-		if($scope.newCompany.id){
-			alert($scope.newCompany.id);
-		}
-		*/
-			
 		$scope.newCompany = $scope.companies[index];
-		alert($scope.newCompany.id);
 		$scope.submitCation = "Update";
-		/*
-		$scope.newCompany.email = $scope.companies[index].email;
-		$scope.newCompany.password = $scope.companies[index].password;
-		*/
+		$scope.savedProperty = true;
+		
+		
 	};
 	
 	$scope.sendNewCompany = function(){
@@ -144,7 +133,8 @@ function CouponSystemController($scope, $http) {
 	}
 	
 	$scope.resetCompany = function(){
-		
+		$scope.newCompany = "";
+		$scope.submitCation = "Create";
 	}
 	
 	/******************* Company functions ******************************/
@@ -176,4 +166,4 @@ function CouponSystemController($scope, $http) {
 	
 	$scope.resetContent();
 	
-}
+});
