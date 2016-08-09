@@ -60,7 +60,7 @@
 					</div>
 					<div id="company_control_panel" class="control_panel" ng-show="company_panel" >
 						<ul>
-							<li onclick="getCoupons()">
+							<li ng-click="getCoupons()">
 								<a href="#">Manage Coupons</a>
 							</li>
 							
@@ -71,7 +71,7 @@
 					</div>
 					<div id="customer_control_panel" class="control_panel" ng-show="customer_panel" >
 						<ul>
-							<li onclick="getCompanies()">
+							<li  onclick="getCompanies()">
 								<a href="#">View all Companies</a>
 							</li>
 							<li><a>Create a company</a></li>
@@ -111,7 +111,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<form ng-submit="addCompany()">
+						<form ng-submit="sendCompany()">
 							<input type="hidden"  ng-value="newCompany.id" id="company_id" name="company_id" />
 							<table>
 								<tr>
@@ -120,7 +120,7 @@
 								</tr>
 								<tr>
 									<td>Company email:</td>
-									<td><input  ng-model="newCompany.email" ng-disabled="savedProperty" id="company_email" name="company_email"/></td>
+									<td><input  ng-model="newCompany.email"  id="company_email" name="company_email"/></td>
 								</tr>
 								<tr>
 									<td>Company password:</td> 
@@ -152,16 +152,17 @@
 									<td >{{customer.id}}</td>
 									<td >{{customer.custName}}</td>
 									<td>{{customer.password}}</td>
-									<td><input type='button' value='update' onclick='updateCompany($index)' /></td>
-									<td><input type='button' value='update' onclick='deleteCompany($index)' /></td>
+									<td><input type='button' value='update' ng-click='updateCustomer($index)' /></td>
+									<td><input type='button' value='delete' ng-click='deleteCustomer($index)' /></td>
 								</tr>
 							</tbody>
 						</table>
-						<form ng-submit="addCompany()">
+						<form ng-submit="sendCustomer()">
+							<input type="hidden"  ng-value="newCustomer.id" id="customer_id" name="customer_id" />
 							<table>
 								<tr>
 									<td>Customer name:</td>
-									<td><input ng-model="newCustomer.custName" id="customer_name" name="customer_name" /></td>
+									<td><input ng-model="newCustomer.custName" ng-disabled="savedProperty" id="customer_name" name="customer_name" /></td>
 								</tr>
 								<tr>
 									<td>Customer password:</td> 
@@ -169,7 +170,8 @@
 								</tr>
 								<tr>
 									<td colspan="2" id="company_table_button">
-										<button id="createCustomer">Create</button>
+										<button id="createCustomer">{{submitCation}}</button>
+										<input type="button" id="sendCustomer" ng-click="resetCustomer()" value="Cancel" />
 									</td>
 								</tr>
 							</table>
@@ -178,6 +180,23 @@
 					
 					
 					<div id="display_coupons" ng-show="coupons_display">
+						<article ng-repeat="coupon in coupons">
+						<img src="images\{{coupon.image}}" />
+							<div class="coupon_content">
+								<header>
+									<hgroup>
+										<h1>{{coupon.title}}</h1>
+									</hgroup>
+								</header>
+								<p>{{coupon.message}}</p>
+								<p>price: {{coupon.price}}</p>
+								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
+								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
+								<footer>
+									<p>- Created by this company</p>
+								</footer>
+							</div>
+						</article>
 						<table id="coupons_table" border="1">
 							<thead>
 								<tr>

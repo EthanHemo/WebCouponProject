@@ -29,6 +29,7 @@ app.controller("CouponSystemController", function($scope, $http){
 		$scope.company_display = false;
 		$scope.customer_display = false;
 		$scope.coupons_display = false;
+		$scope.savedProperty = false;
 		$scope.submitCation = "Create";
 	};
 	
@@ -88,6 +89,7 @@ app.controller("CouponSystemController", function($scope, $http){
 	
 	/******************* Admin functions ******************************/
 	
+	/******************* manage company  ******************************/
 	$scope.getCompanies = function(){
 		$scope.resetContent();
 		$scope.company_display = true;
@@ -95,19 +97,48 @@ app.controller("CouponSystemController", function($scope, $http){
 			$scope.companies = response.company;
 		});
 	};
+
 	
-	$scope.addCompany = function(){
-		alert( $scope.getCompanyForm());
-		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany", $scope.newCompany)
-			.success(function(){
-				$scope.getCompanies();
-				$scope.newCompany.id = '';
-				$scope.newCompany.companyName = '';
-				$scope.newCompany.email = '';
-				$scope.newCompany.password = '';
-			});
+	$scope.updateCompany = function(index){
+		
+		$scope.newCompany = angular.copy($scope.companies[index]);
+		$scope.submitCation = "Update";
+		$scope.savedProperty = true;
+		$scope.submitCompany = "updateCompany";
+		
+		
 	};
 	
+	$scope.deleteCompany = function(index){
+		if (confirm('Are you sure you want to delete this company from the database?')) {
+			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/removeCompany", $scope.companies[index])
+			.success(function(response){
+				alert("Company deleted");
+				$scope.getCompanies();
+			})
+		} 
+	};
+
+	
+	$scope.sendCompany = function(){
+		alert("go to "+$scope.submitCompany);
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/"+$scope.submitCompany, $scope.newCompany)
+				.success(function(response){
+					$scope.getCompanies();
+					$scope.newCompany= '';
+				})
+	};
+	
+	$scope.resetCompany = function(){
+		$scope.newCompany = "";
+		$scope.submitCation = "Create";
+		$scope.savedProperty = false;
+		$scope.submitCompany = "createCompany";
+	};
+	
+	$scope.submitCompany = "createCompany";
+	
+	/******************* manage customers  ******************************/
 	$scope.getCustomers = function(){
 		$scope.resetContent();
 		$scope.customer_display = true;
@@ -116,26 +147,44 @@ app.controller("CouponSystemController", function($scope, $http){
 		});
 	};
 	
-	$scope.updateCompany = function(index){
+	$scope.updateCustomer = function(index){
 		
-		$scope.newCompany = $scope.companies[index];
+		$scope.newCustomer = angular.copy($scope.customers[index]);
 		$scope.submitCation = "Update";
 		$scope.savedProperty = true;
+		$scope.submitCustomer = "updateCustomer";
 		
 		
 	};
 	
-	$scope.sendNewCompany = function(){
-		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/createCompany", $scope.newCompany)
-				.success(function(response){
-					alert("success");
-				})
-	}
+	$scope.deleteCustomer = function(index){
+		if (confirm('Are you sure you want to delete this Customer from the database?')) {
+			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/removeCustomer", $scope.customers[index])
+			.success(function(response){
+				alert("Customer deleted");
+				$scope.getCustomers();
+			})
+		} 
+	};
+
 	
-	$scope.resetCompany = function(){
-		$scope.newCompany = "";
+	$scope.sendCustomer = function(){
+		alert("go to "+$scope.submitCustomer);
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/"+$scope.submitCustomer, $scope.newCustomer)
+				.success(function(response){
+					$scope.getCustomers();
+					$scope.newCustomer= '';
+				})
+	};
+	
+	$scope.resetCustomer = function(){
+		$scope.newCustomer = "";
 		$scope.submitCation = "Create";
-	}
+		$scope.savedProperty = false;
+		$scope.submitCustomer = "createCustomer";
+	};
+	
+	$scope.submitCustomer = "createCustomer";
 	
 	/******************* Company functions ******************************/
 	
