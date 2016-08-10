@@ -179,24 +179,10 @@
 					</div>
 					
 					
+					
+					
+					
 					<div id="display_coupons" ng-show="coupons_display">
-						<article ng-repeat="coupon in coupons">
-						<img src="images\{{coupon.image}}" />
-							<div class="coupon_content">
-								<header>
-									<hgroup>
-										<h1>{{coupon.title}}</h1>
-									</hgroup>
-								</header>
-								<p>{{coupon.message}}</p>
-								<p>price: {{coupon.price}}</p>
-								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
-								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
-								<footer>
-									<p>- Created by this company</p>
-								</footer>
-							</div>
-						</article>
 						<table id="coupons_table" border="1">
 							<thead>
 								<tr>
@@ -224,30 +210,84 @@
 									<td>{{coupon.message}}</td>
 									<td>{{coupon.price}}</td>
 									<td>{{coupon.image}}</td>
-									<td><input type='button' value='update' onclick='updateCoupon($index)' /></td>
-									<td><input type='button' value='delete' onclick='deleteCoupon($index)' /></td>
+									<td><input type='button' value='update' ng-click='updateCoupon($index)' /></td>
+									<td><input type='button' value='delete' ng-click='deleteCoupon($index)' /></td>
 								</tr>
 							</tbody>
 						</table>
-						<form ng-submit="addCompany()">
+						<form ng-submit="sendCoupon()">
+							<input type="hidden"  ng-value="newCoupon.id" id="newCoupon_id" name="newCoupon_id" />
 							<table>
 								<tr>
-									<td>Customer name:</td>
-									<td><input ng-model="newCustomer.custName" id="customer_name" name="customer_name" /></td>
+									<td>Coupon title:</td>
+									<td><input ng-model="newCoupon.title" id="newCoupon_title" name="newCoupon_title" /></td>
 								</tr>
 								<tr>
-									<td>Customer password:</td> 
-									<td><input ng-model="newCustomer.password" id="customer_passowrd" name="customer_passowrd" /></td>
+									<td>Coupon Start date:</td> 
+									<td><input ng-model="newCoupon.startDate"  type="date" id="newCoupon_startDate" name="newCoupon_startDate" /></td>
 								</tr>
 								<tr>
-									<td colspan="2" id="company_table_button">
-										<button id="createCustomer">Create</button>
+									<td>Coupon End date:</td> 
+									<td><input ng-model="newCoupon.endDate"  type="date" id="newCoupon_endDate" name="newCoupon_endDate" /></td>
+								</tr>
+								<tr>
+									<td>Coupon amount:</td>
+									<td><input ng-model="newCoupon.amount" id="newCoupon_amount" name="newCoupon_amount" /></td>
+								</tr>
+								<tr>
+									<td>Coupon type:</td>
+									<td>
+										<select ng-model="newCoupon.type" id="newCoupon_type" name="newCoupon_type">
+											<option>RESTURANS</option>
+											<option>ELECTRICITY</option>
+											<option>FOOD</option>
+											<option>HEALTH</option>
+											<option>SPORTS</option>
+											<option>CAMPING</option>
+											<option>TRAVELING</option>
+										</select> 
+									</td>
+								</tr>
+								<tr>
+									<td>Coupon message:</td>
+									<td><textarea ng-model="newCoupon.message"  rows="4" cols="50"  id="newCoupon_message" name="newCoupon_message"></textarea></td>
+								</tr>
+								<tr>
+									<td>Coupon price:</td>
+									<td><input ng-model="newCoupon.price" id="newCoupon_price" name="newCoupon_price" /></td>
+								</tr>
+								<tr>
+									<td>Coupon picture:</td>
+									<td><input  ng-model="newCoupon.image" id="newCoupon_image" name="newCoupon_image" /></td>
+								</tr>
+								<tr>
+									<td colspan="2" id="coupon_table_button">
+										<button id="createCoupon">{{submitCation}}</button>
+										<input type="button" id="sendCoupon" ng-click="resetCoupon()" value="Cancel" />
 									</td>
 								</tr>
 							</table>
 						</form>
 					</div>
-					
+					<div id="display_coupons" ng-show="coupons_display_designed">
+						<article ng-repeat="coupon in coupons">
+						<img ng-src="images\{{coupon.image}}" />
+							<div class="coupon_content">
+								<header>
+									<hgroup>
+										<h1>{{coupon.title}}</h1>
+									</hgroup>
+								</header>
+								<p>{{coupon.message}}</p>
+								<p>price: {{coupon.price}}</p>
+								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
+								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
+								<footer>
+									<p>- Created by this company</p>
+								</footer>
+							</div>
+						</article>
+					</div>
 					
 					
 					

@@ -29,6 +29,7 @@ app.controller("CouponSystemController", function($scope, $http){
 		$scope.company_display = false;
 		$scope.customer_display = false;
 		$scope.coupons_display = false;
+		$scope.coupons_display_designed = false;
 		$scope.savedProperty = false;
 		$scope.submitCation = "Create";
 	};
@@ -195,14 +196,56 @@ app.controller("CouponSystemController", function($scope, $http){
 			if(response.coupon.length){
 				$scope.coupons = response.coupon;
 			}
-			else{
+			else if(response.coupon != null){
 				$scope.coupons = [];
 				$scope.coupons.push(response.coupon);
 			}
 		});
 		
-	}
+	};
 	
+	
+	$scope.updateCoupon = function(index){
+		
+		$scope.newCoupon = angular.copy($scope.coupons[index]);
+		alert(typeof($scope.coupons[index].startDate));
+		$scope.newCoupon.startDate =  new Date($scope.coupons[index].startDate);
+		$scope.newCoupon.endDate =  new Date($scope.coupons[index].endDate);
+		$scope.submitCation = "Update";
+		$scope.savedProperty = true;
+		$scope.submitCoupon = "updateCoupon";
+		
+		
+	};
+	
+	$scope.deleteCoupon = function(index){
+		if (confirm('Are you sure you want to delete this Coupon from the database?')) {
+			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/company/removeCoupon", $scope.coupons[index])
+			.success(function(response){
+				alert("Coupon deleted");
+				$scope.getCoupons();
+			})
+		} 
+	};
+
+	
+	$scope.sendCoupon = function(){
+		alert("go to "+$scope.submitCoupon);
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/company/"+$scope.submitCoupon, $scope.newCoupon)
+				.success(function(response){
+					$scope.getCoupons();
+					$scope.newCoupon= '';
+				})
+	};
+	
+	$scope.resetCoupon = function(){
+		$scope.newCoupon = "";
+		$scope.submitCation = "Create";
+		$scope.savedProperty = false;
+		$scope.submitCoupon = "createCoupon";
+	};
+	
+	$scope.submitCoupon = "createCoupon";
 	
 	/******************* Startup functions ******************************/
 	
@@ -212,7 +255,6 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.coupons =[];
 	$scope.user;
 	$scope.resetLogin();
-	
 	$scope.resetContent();
 	
 });
