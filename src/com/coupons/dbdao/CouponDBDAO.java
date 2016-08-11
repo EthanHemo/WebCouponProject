@@ -451,6 +451,46 @@ public class CouponDBDAO implements CouponDAO {
 
 		return coupons;
 	}
+	
+	/**
+	 * This function return a collection with all the available coupons to purches for the customer of the given
+	 * @param customer
+	 * @return
+	 * @throws ManagerThreadException
+	 * @throws ManagerSQLException
+	 */
+	public Collection<Coupon> getAllAvailableCoupons(Customer customer) throws ManagerThreadException, ManagerSQLException{
+		String sql = "select * from coupon c"+
+						" where c.amount > 0"+
+						" and c.id not in (select coupon_id from customer_coupon cc" +
+						" where cc.cust_id =" + customer.getId() + ")";
+		Collection<Coupon> coupons = new ArrayList<Coupon>();
+		Connection conn = null;
+		try {
+			conn = pool.getConnection();
+			Statement statement = conn.createStatement();
+
+			ResultSet resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+				Coupon coupon = new Coupon(resultSet.getInt("id"));
+				coupon.setAmount(resultSet.getInt("amount"));
+				coupon.setEndDate(resultSet.getDate("end_date"));
+				coupon.setStartDate(resultSet.getDate("start_date"));
+				coupon.setImage(resultSet.getString("image"));
+				coupon.setMessage(resultSet.getString("message"));
+				coupon.setPrice(resultSet.getDouble("price"));
+				coupon.setTitle(resultSet.getString("title"));
+				coupon.setType(CouponType.valueOf(resultSet.getString("type")));
+				coupons.add(coupon);
+			}
+		} catch (SQLException e) {
+			throw new ManagerSQLException(e.getMessage());
+		} finally {
+			pool.returnConnection(conn);
+		}
+
+		return coupons;
+	}
 
 	/**
 	 * This function return a collection with all the coupons of the given

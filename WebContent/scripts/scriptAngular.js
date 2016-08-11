@@ -19,6 +19,7 @@ app.controller("CouponSystemController", function($scope, $http){
 	
 	$scope.resetLogin = function(){
 		$scope.login_panel = true;
+		$scope.panel='none';
 		$scope.welcome_panel = false;
 		$scope.admin_panel = false;
 		$scope.company_panel = false;
@@ -59,6 +60,7 @@ app.controller("CouponSystemController", function($scope, $http){
             	switch(data.role){
 	            	case 'admin':
 	            		$scope.admin_panel = true;
+	            		
 	            		break;
             		
 	            	case 'company':
@@ -69,6 +71,7 @@ app.controller("CouponSystemController", function($scope, $http){
 	            		$scope.customer_panel = true;
 	            		break;
             	}
+            	$scope.panel = data.role;
               }else {
                   alert("Error");
               }
@@ -246,6 +249,54 @@ app.controller("CouponSystemController", function($scope, $http){
 	};
 	
 	$scope.submitCoupon = "createCoupon";
+	
+	/******************* Customer functions ******************************/
+	
+	$scope.getAvailableCoupons = function(){
+		$scope.resetContent();
+		$scope.coupons_display_designed = true;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getAvailableCoupons").success(function(response){
+			$scope.buyCoupons=true;
+			if(response.coupon.length){
+				$scope.coupons = response.coupon;
+			}
+			else if(response.coupon != null){
+				$scope.coupons = [];
+				$scope.coupons.push(response.coupon);
+			}
+		});
+	};
+	
+	$scope.getPurchasedCoupons = function(){
+		alert("in purchased");
+		$scope.resetContent();
+		$scope.coupons_display_designed = true;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCoupons").success(function(response){
+			alert("in response");
+			$scope.buyCoupons=false;
+			if(response){
+				if(response.coupon.length){
+					$scope.coupons = response.coupon;
+				}
+				else{
+					$scope.coupons = [];
+					$scope.coupons.push(response.coupon);
+				}
+			}
+			
+		});
+	};
+	
+	$scope.purchaseCoupon= function(index){
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/customer/purchaseCoupon",$scope.coupons[index]).success(function(response){
+			$scope.buyCoupons=false;
+			$scope.resetContent();
+			$scope.coupons_display_designed = true;
+		});
+		
+	};
+	
+	
 	
 	/******************* Startup functions ******************************/
 	
