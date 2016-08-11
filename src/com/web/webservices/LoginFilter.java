@@ -1,6 +1,7 @@
 package com.web.webservices;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -9,12 +10,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter("/LoginFilter")
+@WebFilter("/rest/*")
 public class LoginFilter implements Filter {
+	
+	private static final String FACADE_PARAMETER = "facade";
 
     /**
      * Default constructor. 
@@ -36,13 +40,20 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if(httpRequest.getSession()== null || httpRequest.getSession().getAttribute("Facade") == null ){
-			// throw unautorized
+		String url = httpRequest.getRequestURL().toString();
+		System.out.println(url);
+		System.out.println(url.indexOf("/login"));
+		System.out.println(url.indexOf("Ethan"));
+		if((httpRequest.getSession()== null || httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null)&& url.indexOf("/login")== -1 ){
+			Response.status(401).build();
+		}
+		else{
+			chain.doFilter(request, response);
 		}
 			
 
 		// pass the request along the filter chain
-		chain.doFilter(request, response);
+		
 	}
 
 	/**

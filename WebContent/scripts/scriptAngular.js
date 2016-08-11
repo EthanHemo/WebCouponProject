@@ -268,11 +268,9 @@ app.controller("CouponSystemController", function($scope, $http){
 	};
 	
 	$scope.getPurchasedCoupons = function(){
-		alert("in purchased");
 		$scope.resetContent();
 		$scope.coupons_display_designed = true;
 		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCoupons").success(function(response){
-			alert("in response");
 			$scope.buyCoupons=false;
 			if(response){
 				if(response.coupon.length){
