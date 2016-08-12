@@ -45,7 +45,7 @@
 						<button id="logout" ng-click="logout()">Logout</button>
 					</div>
 					<p id="feedback"></p>
-					<div id="admin_control_panel" class="control_panel" ng-show="admin_panel" >
+					<div id="admin_control_panel" class="control_panel" ng-show="panel=='admin'" >
 						<ul>
 							<li ng-click="getCompanies()">
 								<a href="#">Manage companies</a>
@@ -58,7 +58,7 @@
 							
 						</ul>
 					</div>
-					<div id="company_control_panel" class="control_panel" ng-show="company_panel" >
+					<div id="company_control_panel" class="control_panel" ng-show="panel=='company'" >
 						<ul>
 							<li ng-click="getCoupons()">
 								<a href="#">Manage Coupons</a>
@@ -69,13 +69,15 @@
 							
 						</ul>
 					</div>
-					<div id="customer_control_panel" class="control_panel" ng-show="customer_panel" >
+					<div id="customer_control_panel" class="control_panel" ng-show="panel=='customer'" >
 						<ul>
-							<li  onclick="getCompanies()">
-								<a href="#">View all Companies</a>
+							<li  ng-click="getAvailableCoupons()">
+								<a href="#">View all available coupons</a>
 							</li>
-							<li><a>Create a company</a></li>
-							<li><a>Update a company</a></li>
+							<li  ng-click="getPurchasedCoupons()">
+								<a href="#">View all purchased coupons</a>
+							</li>
+							
 
 							
 						</ul>
@@ -283,6 +285,7 @@
 								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
 								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
 								<footer>
+									<button ng-click="purchaseCoupon($index)" ng-show="buyCoupons">Purchase</button>
 									<p>- Created by this company</p>
 								</footer>
 							</div>

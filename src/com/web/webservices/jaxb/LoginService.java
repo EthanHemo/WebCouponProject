@@ -61,7 +61,7 @@ public class LoginService {
 
 			CouponSystem couponSystem = CouponSystem.getInstance();
 			
-
+			
 			switch (role) {
 			case "admin":
 				facade = couponSystem.login(username, password,	CouponSystem.ADMIN);				
@@ -69,12 +69,14 @@ public class LoginService {
 				clientData.setRole(role);
 				break;
 			case "company":
+				System.out.println("In company");
 				facade = couponSystem.login(username, password,
 						CouponSystem.COMPANY);
 				CompanyFacade companyFacade = (CompanyFacade)facade;
 				clientData.setUsername(companyFacade.getCompany().getCompanyName());
 				break;
 			case "customer":
+				System.out.println("In customer");
 				facade = couponSystem.login(username, password,
 						CouponSystem.CUSTOMER);
 				CustomerFacade customerFacade = (CustomerFacade)facade;

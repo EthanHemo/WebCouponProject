@@ -63,6 +63,10 @@ public class CustomerFacade implements CouponClientFacade {
 		return customer.getCoupons();
 
 	}
+	
+	public Collection<Coupon> getAllAvailableCoupons() throws ManagerThreadException, ManagerSQLException{
+		return couponDB.getAllAvailableCoupons(customer);
+	}
 
 	/**
 	 * This function returns all coupon the user logged in purchased of the type given.
