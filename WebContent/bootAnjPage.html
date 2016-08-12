@@ -46,7 +46,7 @@
    						 
  						</div>		
  						<div class="panel-body">	
-						<ul ng-show="admin_panel" >
+						<ul  ng-show="panel=='admin' >
 							<li ng-click="getCompanies()">
 								<a href="#">Manage companies</a>
 							</li>
@@ -57,20 +57,20 @@
 
 							
 						</ul>
-						<ul  ng-show="company_panel">
+						<ul   ng-show="panel=='company'>
 							<li ng-click="getCoupons()" >
 								<a href="#">Manage Coupons</a>
 							</li>
 
 						</ul>
 					
-						<ul ng-show="customer_panel">
-							<li  onclick="getCompanies()">
-								<a href="#">View all Companies</a>
+						<ul  ng-show="panel=='customer'>
+							<li  ng-click="getAvailableCoupons()">
+								<a href="#">View all available coupons</a>
 							</li>
-							<li><a>Create a company</a></li>
-							<li><a>Update a company</a></li>
-
+							<li  ng-click="getPurchasedCoupons()">
+								<a href="#">View all purchased coupons</a>
+							</li>
 							
 						</ul>
 						
