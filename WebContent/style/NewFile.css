@@ -1,0 +1,22 @@
+@CHARSET "windows-1255";
+
+#main_wrapper{
+	padding: 20px;
+	border: 1px solid black;
+}
+
+#header{
+	background: #00CCFF;
+}
+
+#menu{
+	background: #f0d746;
+}
+
+#content{
+	background: #affb82;
+}
+
+#control_panel{
+	margin: 20px;
+}

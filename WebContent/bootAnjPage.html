@@ -46,7 +46,7 @@
    						 
  						</div>		
  						<div class="panel-body">	
-						<ul  ng-show="panel=='admin' >
+						<ul  ng-show="panel=='admin'" >
 							<li ng-click="getCompanies()">
 								<a href="#">Manage companies</a>
 							</li>
@@ -57,14 +57,14 @@
 
 							
 						</ul>
-						<ul   ng-show="panel=='company'>
+						<ul   ng-show="panel=='company'">
 							<li ng-click="getCoupons()" >
 								<a href="#">Manage Coupons</a>
 							</li>
 
 						</ul>
 					
-						<ul  ng-show="panel=='customer'>
+						<ul  ng-show="panel=='customer'">
 							<li  ng-click="getAvailableCoupons()">
 								<a href="#">View all available coupons</a>
 							</li>
@@ -266,9 +266,11 @@
 						</form>
 					</div>
 					<div id="display_coupons" ng-show="coupons_display_designed">
-						<article ng-repeat="coupon in coupons">
-						<img ng-src="images\{{coupon.image}}" />
-							<div class="coupon_content">
+						<article ng-repeat="coupon in coupons"  class="row">
+							<div class="col-md-4">
+								<img ng-src="images\{{coupon.image}}" />
+							</div>
+							<div class="coupon_content col-md-6" >
 								<header>
 									<hgroup>
 										<h1>{{coupon.title}}</h1>
@@ -278,9 +280,9 @@
 								<p>price: {{coupon.price}}</p>
 								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
 								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
-								<footer>
-									<p>- Created by this company</p>
-								</footer>
+							</div>
+							<div class="col-md-2">
+								<p>- Created by this company</p>
 							</div>
 						</article>
 					</div>
