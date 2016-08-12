@@ -5,7 +5,7 @@
 var user;
 var sentCompany;
 var ajaxCompanies;
-var app = angular.module('app',[]);
+var app = angular.module('myApp',['ui.bootstrap']);
 
 app.controller("CouponSystemController", function($scope, $http){
 	
