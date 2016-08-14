@@ -8,16 +8,24 @@
 			var ajax=new XMLHttpRequest();
 			
 			function ajaxAction(){
+				var url="http://localhost:8080/WebCouponProject/rest/jaxb/test";
+				var file = document.getElementById("pic");
+				var formData = new FormData();
 				
-				var url="http://localhost:8080/WebCouponProject/rest/jaxb/admin";
+				formData.append("pic", file.files[0]);
+				
 				ajax.onreadystatechange=handleResponse;
-				ajax.open("GET",url,true);
-				ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				ajax.send();
+				ajax.open("POST",url,true);
+				ajax.setRequestHeader("Content-Type", "multipart/form-data; boundary=Asjvchf" );
+				ajax.send(formData);
 			}
 			
 			function handleResponse() {
 				if(ajax.readyState==4){
+					alert(ajax.responseText);
+				}
+				
+				/* if(ajax.readyState==4){
 					var list = ajax.response.company;
 					var str = '';
 					for(var i=0; i< list.length;i++){
@@ -28,15 +36,18 @@
 					
 				}else{
 					
-				}	
+				} */	
 			}
 
 		</script>
 	</head>
 	<body>
-		<button onClick="ajaxAction()"> Click me!!!</button><br />
-		<div id="result">
-		</div>
+		<form>
+			first name: <input name="fname" id="fname" /> <br />
+			last name: <input name="lname" id="lname" /> <br />
+			picture: <input type="file" name="pic" id="pic" /> <br />
+			<input type="button" onclick="ajaxAction()" value="submit" />
+		</form>
 		
 	</body>
 </html>
