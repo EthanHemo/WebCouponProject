@@ -23,8 +23,8 @@
   			<div id="menu" class="col-md-4">
   				<div id="login_div" ng-show="login_panel" >
 					<form id="login_form" ng-submit="submitLogin()">
-						User Name: <input ng-model="login.username"  class="form-control input-sm chat-input" id="username" name="username" type="text" /> <br />
-						Password: <input ng-model="login.password" class="form-control input-sm chat-input" id="password" name="password" type="password" /> <br />
+						<input ng-model="login.username"  class="form-control input-sm chat-input" id="username" name="username" type="text" placeholder="User Name" /> <br />
+						<input ng-model="login.password" class="form-control input-sm chat-input" id="password" name="password" type="password" placeholder="Password" /> <br />
 						Type: 
 						<select ng-model="login.role" id="role" name="role" > 
 							<option value="customer">Customer</option>
