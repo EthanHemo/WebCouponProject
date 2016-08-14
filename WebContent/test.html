@@ -1,52 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 	<head>
 		<meta charset="utf-8" />
 		<title>Coupon System</title>
+		<script src = "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+		<script src = "scripts/test.js"></script>
 		
-		<script>
-			var ajax=new XMLHttpRequest();
-			
-			function ajaxAction(){
-				var url="http://localhost:8080/WebCouponProject/rest/jaxb/test";
-				var file = document.getElementById("pic");
-				var formData = new FormData();
-				
-				formData.append("pic", file.files[0]);
-				
-				ajax.onreadystatechange=handleResponse;
-				ajax.open("POST",url,true);
-				ajax.setRequestHeader("Content-Type", "multipart/form-data; boundary=Asjvchf" );
-				ajax.send(formData);
-			}
-			
-			function handleResponse() {
-				if(ajax.readyState==4){
-					alert(ajax.responseText);
-				}
-				
-				/* if(ajax.readyState==4){
-					var list = ajax.response.company;
-					var str = '';
-					for(var i=0; i< list.length;i++){
-						str += list[i].companyName + ",";
-					}
-					alert(str);
-					
-					
-				}else{
-					
-				} */	
-			}
-
-		</script>
 	</head>
-	<body>
+	<body ng-controller = "myCtrl">
 		<form>
 			first name: <input name="fname" id="fname" /> <br />
 			last name: <input name="lname" id="lname" /> <br />
-			picture: <input type="file" name="pic" id="pic" /> <br />
-			<input type="button" onclick="ajaxAction()" value="submit" />
+			picture: <input type="file" file-model = "pic" name="pic" id="pic" /> <br />
+			<input type="button" ng-click = "uploadFile()" value="submit" />
 		</form>
 		
 	</body>
