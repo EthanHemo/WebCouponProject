@@ -2,7 +2,7 @@
 
 #main_wrapper{
 	padding: 20px;
-	border: 1px solid black;
+	
 }
 
 #header{
@@ -15,8 +15,10 @@
 
 #content{
 	background: #affb82;
+	padding: 20px;
 }
 
 #login_div {
 	padding: 20px;
 }
+
