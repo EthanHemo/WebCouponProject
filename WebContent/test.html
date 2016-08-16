@@ -8,12 +8,10 @@
 		
 	</head>
 	<body ng-controller = "myCtrl">
-		<form>
-			first name: <input name="fname" id="fname" /> <br />
-			last name: <input name="lname" id="lname" /> <br />
-			picture: <input type="file" file-model = "pic" name="pic" id="pic" /> <br />
-			<input type="button" ng-click = "uploadFile()" value="submit" />
-		</form>
+		<div ng-controller = "myCtrl">
+    		<input type="file" file-model="myFile"/>
+    		<button ng-click="uploadFile()">upload me</button>
+		</div>
 		
 	</body>
 </html>

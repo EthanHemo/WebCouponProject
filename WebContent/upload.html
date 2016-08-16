@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<title>Eyal Coupons</title>
+<link rel="shortcut icon" href="favicon.ico" />
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.js"></script>
+<script type="text/javascript" src="index.js"></script>
+<!-- <script type="text/javascript" src="angular.min.js"></script>  -->
+
+<link rel="stylesheet" type="text/css" href="index.css">
+
+<!-- just for trying -->
+<script type="text/javascript" src="jquery-3.1.0.js"></script>
+
+</head>
+<body>
+	<div class='wrapper'>
+		<header>
+			<img src="img/logo.png" alt="Hello" style="padding-left: 2%">
+
+			<div id="logout">
+				<table>
+					<tbody>
+						<tr>
+							<td>Hello,&nbsp;
+								<div id=username>New user</div>&nbsp;&nbsp;&nbsp;&nbsp;
+							</td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+							<td><a href="#" onclick="logout()">Log&nbsp;Out</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="form" id="headerForm">
+				<table>
+					<tbody>
+						<tr>
+							<td class="inputForm"><label for="user">User Name</label></td>
+							<td class="inputForm"><label for="pass">Password</label></td>
+							<td class="inputForm"><label for="type">Role</label></td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td><input type="text" name="userName" id="user"
+								tabindex="1"></td>
+							<td><input type="password" name="password" id="pass"
+								tabindex="2"></td>
+
+							<td>
+								<!-- Select Basic-->
+								<div id="inputForm">
+									<select id="selectType" name="selectType" class="inputtext"
+										tabindex="3">
+										<option value="customer">Customer</option>
+										<option value="company">Company</option>
+										<option value="admin">Admin</option>
+									</select>
+								</div>
+							</td>
+
+							<td><label id="loginbutton"> <input value="Log In"
+									tabindex="4" type="button" onclick="login()">
+
+							</label></td>
+						</tr>
+
+
+						<tr>
+							<td><a href="#">Forgot account?</a></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+
+			<h1>
+				<q>John Bryce Project: Java server side and Full Stack</q>
+			</h1>
+		</header>
+		<!-- ----------------------------------------------------------- -->
+		<div class="main">
+			<div id="first">
+				<ul class='nav'>
+					<li><a href='#'>About</a></li>
+					<li><a href='#'>Location</a></li>
+					<li><a href='#'>Item 2</a></li>
+					<li><a href='#'>Item 3</a></li>
+					<li><a href='#'>Item 4</a></li>
+				</ul>
+			</div>
+
+			<!-- ----------------------------------------------------------- -->
+			<div id="second">
+
+				<div id="newRegister">
+					<div id="registerOutput"></div>
+					<ul class='nav'>
+						<li><a href="#" onclick="newRegister()">New Register</a></li>
+					</ul>
+				</div>
+
+				<div id="registerForm" class="registerForm" style="display: none">
+					<div onclick="backRegister()" style="text-align: left">
+						<h5>
+							<a href="#">Back</a>
+						</h5>
+					</div>
+
+					<h1>Register Form</h1>
+					<h3>Pick A Clients</h3>
+					<br />
+
+					<div class="userPick" id="userPick">
+						<table>
+							<tr>
+								<td><input onclick="customerPick(this)" type="button"
+									value="Customer" /></td>
+								<td colspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td><input onclick="customerPick(this)" type="button"
+									value="Company" /></td>
+							</tr>
+						</table>
+					</div>
+
+					<div id="customerRegister">
+
+						<form id="customerRegisterForm" style="display: none">
+							<table>
+								<tr>
+									<td>User name</td>
+									<td><input name="userName"></td>
+								</tr>
+								<tr>
+									<td>Password</td>
+									<td><input type="password" name="password"></td>
+								</tr>
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="2"><input id="submitBtnCustomerLogin"
+										onclick="register(this,0)" type="button" value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+
+					<div id="companyLogin">
+
+						<form id="companyRegisterForm" style="display: none">
+							<table>
+								<tr>
+									<td>User name</td>
+									<td><input name="userName"></td>
+								</tr>
+								<tr>
+									<td>Password</td>
+									<td><input type="password" name="password"></td>
+								</tr>
+								<tr>
+									<td>Email</td>
+									<td><input type="email" name="email"></td>
+								</tr>
+								<tr>
+									<td colspan="2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="2"><input id="submitBtnCompanyLogin"
+										onclick="register(this,1)" type="button" value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div style="color: #3c36ce" id="statDiv"></div>
+				</div>
+				<!-- ----------------------------------------------------------- -->
+				<div id="adminDiv" style="display: none">
+					<h2>Admin:</h2>
+					<table>
+						<tr>
+							<td><ul class='nav'>
+									<li><a href='#' onclick="createNewCustomer()">Create
+											new Customer</a></li>
+								</ul></td>
+
+							<td><ul class='nav'>
+									<li><a href='#' onclick="createNewCompany()">Create
+											new Company</a></li>
+								</ul></td>
+
+							<td><ul class='nav'>
+									<li><a href='#' onclick="getAllCustomer()">Get All
+											Customer</a></li>
+								</ul></td>
+
+							<td><ul class='nav'>
+									<li><a href='#' onclick="getAllCompanies()">Get All
+											Companies</a></li>
+								</ul></td>
+						</tr>
+					</table>
+
+					<form id="newCustomerForm" style="display: none">
+						<table>
+							<p>New Customer</p>
+							<tr>
+								<td>User name</td>
+								<td><input name="userName"></td>
+							</tr>
+							<tr>
+								<td>Password</td>
+								<td><input type="password" name="password"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input onclick="submitBtnnewCustomerForm()" type="button" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+
+					<form id="newCompanyForm" style="display: none">
+						<table>
+							<p>New Company</p>
+							<tr>
+								<td>User name</td>
+								<td><input name="userName"></td>
+							</tr>
+							<tr>
+								<td>Password</td>
+								<td><input type="password" name="password"></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><input type="text" name="email"></td>
+							</tr>
+							<tr>
+								<td colspan="2"><input onclick="submitBtnnewCompanyForm()" type="button" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+
+
+					<div id="customerEditForm" style="display: none">
+						<form id="formEditCustomer">
+							<p>Customer: EditFourm</p>
+							<p>
+								Id:<span id="idCustomerInEditFourm"></span>
+							</p>
+							<table>
+								<tr>
+									<td>Password</td>
+									<td><input type="password" name="password"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input
+										onclick="submitBtnEditCustomerForm()" type="button" value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+
+					<div id="customerTableDiv"></div>
+					
+						<div id="companyEditForm" style="display: none">
+						<form id="formEditCompany">
+							<p>Company: EditFourm</p>
+							<p>
+								Id:<span id="idCompanyInEditFourm"></span>
+							</p>
+							<table>
+								<tr>
+									<td>Email</td>
+									<td><input name="email"></td>
+								</tr>
+								<tr>
+									<td>Password</td>
+									<td><input type="password" name="password"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input
+										onclick="submitBtnEditCompanyForm()" type="button"
+										value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					<div id="companyTableDiv"></div>
+
+
+				</div>
+				<!-- ---------------------------------------------------------------------------------------------- -->
+				<div id="company" style="display: none" ng-controller="companyCtrl">
+					<h2>Company:</h2>
+					name:
+					<div id="companyName"></div>
+					<br /> email:
+					<div id="companyEmail"></div>
+					
+					<h3>File Upload:</h3>
+					Select a file to upload:
+					<br/><br/>
+					<form action="rest/jaxb/upload" method="post" enctype="multipart/form-data">
+						<input id="filename" type="file" name="file"/><br/><br/>
+						<button type="submit" type="submit">Upload></button>
+						<br/><br/>
+					</form>
+					
+								
+					<table>
+						<tr>
+							<td><ul class='nav'>
+									<li><a href='#' onclick="createNewCoupon()">Create new
+											Coupon</a></li>
+								</ul></td>
+							<td><ul class='nav'>
+									<li><a href='#' onclick="showCompanyCoupon()">Show All
+											Coupon</a></li>
+								</ul></td>
+						</tr>
+					</table>
+
+
+					<form id="newCoupon" style="display: none">
+						<table>
+							<tr>
+								<th>Title</th>
+								<th>Type</th>
+								<th>Amount</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th>Message</th>
+								<th>Price</th>
+								<th>Image</th>
+							</tr>
+							<tr>
+								<td><input type="text" name="title"></td>
+								<td><select name="selectTypeForm" class="inputtext">
+										<option value="CAMPING">CAMPING</option>
+										<option value="ELECTRICY">ELECTRICY</option>
+										<option value="FOOD">FOOD</option>
+										<option value="HEALTH">HEALTH</option>
+										<option value="RESTURANTS">RESTURANTS</option>
+										<option value="SPORTS">SPORTS</option>
+										<option value="TRAVELLING">TRAVELLING</option>
+								</select></td>
+								<td><input type="text" name="amount"></td>
+								<td><input type="date" name="startDate"></td>
+								<td><input type="date" name="endDate"></td>
+								<td><input type="text" name="message"></td>
+								<td><input type="text" name="price"></td>
+								<td><input type="text" name="image"></td>
+								<td colspan="2"><input onclick="submitBtnCreateCouponForm()" type="button" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+
+					<br /> Select Type:
+					<form id="companyCouponType">
+						<table>
+							<tr>
+								<td><select id="selectType" name="selectType" class="inputtext" tabindex="3">
+										<option value="Camping">Camping</option>
+										<option value="Electricity">Electricity</option>
+										<option value="Food">Food</option>
+										<option value="Health">Health</option>
+										<option value="Restaurants">Restaurants</option>
+										<option value="Sports">Sports</option>
+										<option value="Traveling">Traveling</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td><input ng-click="submitBtncompanyCouponType()" type="button" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+					<br /> Choose price:
+					<form id="companyCouponPrice">
+						<table>
+							<tr>
+								<td><input type="text" id="price"></td>
+							</tr>
+							<tr>
+								<td><input onclick="submitBtncompanyCouponPrice()"
+									type="button" value="Submit"></td>
+							</tr>
+						</table>
+					</form>
+
+					<br /> Choose end date:
+					<form id="companyCouponEndDate">
+						<table>
+							<tr>
+								<td><input type="text" id="price"></td>
+							</tr>
+							<tr>
+								<td><input onclick="submitBtncompanyCouponEndDate()"
+									type="button" value="Submit"></td>
+							</tr>
+						</table>
+
+					</form>
+
+					<div id="couponTableDiv"></div>
+
+					<div id="couponEditForm" style="display: none">
+						<form>
+							<p id="idCouponInEditFourm"></p>
+							<table>
+								<tr>
+									<td>End Date</td>
+									<td><input name="end_date"></td>
+								</tr>
+								<tr>
+									<td>Amount</td>
+									<td><input type="text" name="amount"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input onclick="submitBtnEditCouponForm"
+										type="button" value="Submit"></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				<br /> <br />
+<!-- -------------------------------------------------------------------------------------------------------- -->
+				<div ng-controller="myCtrl">
+					<div id="customer" style="display: none">
+						<h2>Customer:</h2>
+						<table>
+							<tr>
+								<td><ul class='nav'>
+										<li><a href='#' onclick=showAllCouponOfCustomer()>Show
+												All Coupon Of Customer</a></li>
+									</ul></td>
+								<td><ul class='nav'>
+										<li><a href='#' onclick=showAllCouponInStyle()>Show
+												All Coupon In Data to Purchase</a></li>
+									</ul></td>
+							</tr>
+						</table>
+						<div id="couponTableDivOfCustomerInStyle"></div>
+						<br /> Purchase Coupon id:
+						<form>
+							<table>
+								<tr>
+									<td><input type="text" id="purchaseC" name="purchaseC"></td>
+								</tr>
+							</table>
+						</form>
+
+						<br /> Select Type:
+						<form>
+							<table>
+								<tr>
+									<td><select id="selectType" name="selectType"
+										class="inputtext" tabindex="3">
+											<option value="1">Camping</option>
+											<option value="2">Electricity</option>
+											<option value="3">Food</option>
+											<option value="4">Health</option>
+											<option value="5">Restaurants</option>
+											<option value="6">Sports</option>
+											<option value="7">Traveling</option>
+									</select></td>
+								</tr>
+							</table>
+						</form>
+
+						<br />
+						<form>
+							<table>
+								<tr>
+									<td>Choose price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									<td><input type="text" id="price" ng-model="price"></td>
+									<td>{{inCorrect}}</td>
+									<td><input ng-click="choosePrice()" type="button"
+										value="Sumbit" /></td>
+								</tr>
+							</table>
+						</form>
+
+						<div id="couponTableDivOfCustomer"></div>
+						<div id="customerEditForm" style="display: none">
+							<form>
+								<p id="idCustomerInEditFourm"></p>
+								<table>
+									<tr>
+										<td>password</td>
+										<td><input name="end_date"></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input onclick="submitBtnEditCouponForm"
+											type="button" value="Submit"></td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+				<br/><br/><br/><br/><br/>
+			</div>
+
+
+			<footer>
+				<table>
+					<tr>Contact&nbsp;me:&nbsp;</tr>
+					<tr>
+						<td><a href=""><img src="img/facebook.ico" height="30"
+								width="30"></a></td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><a href=""><img src="img/gmail.ico" height="30"
+								width="30"></a></td>
+					</tr>
+				</table>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>
