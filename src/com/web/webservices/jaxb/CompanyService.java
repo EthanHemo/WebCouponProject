@@ -1,5 +1,8 @@
 package com.web.webservices.jaxb;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
@@ -9,6 +12,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -33,6 +37,7 @@ public class CompanyService {
 	public void createCoupon(Coupon coupon) {
 		try {
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
+			System.out.println(coupon.toString());
 			facade.createCoupon(coupon);
 		} catch (Exception e) {
 			
@@ -89,7 +94,10 @@ public class CompanyService {
 		return null;
 	}
 
-	public Collection<Coupon> getCouponByType(CouponType type) {
+	@GET
+	@Path("getCouponByType")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Coupon> getCouponByType(@QueryParam("type") CouponType type) {
 		try {
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
 			return facade.getCouponByType(type);
@@ -100,7 +108,10 @@ public class CompanyService {
 		return null;
 	}
 
-	public Collection<Coupon> getCouponUntilPrice(float price) {
+	@GET
+	@Path("getCouponUntilPrice")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Coupon> getCouponUntilPrice(@QueryParam("price") float price) {
 		try {
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
 			return facade.getCouponUntilPrice(price);
@@ -111,11 +122,19 @@ public class CompanyService {
 		return null;
 	}
 
-	public Collection<Coupon> getCouponUntilDate(Date date) {
+	@GET
+	@Path("getCouponUntilDate")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Coupon> getCouponUntilDate(@QueryParam("date") String dateStr) {
 		try {
+			DateFormat df = new SimpleDateFormat("EEE MMM d yyyy");
+			Date date = df.parse(dateStr);
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
 			return facade.getCouponUntilDate(date);
 		} catch (ManagerSQLException | ManagerThreadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -41,10 +41,8 @@ public class LoginFilter implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String url = httpRequest.getRequestURL().toString();
-		System.out.println(url);
-		System.out.println(url.indexOf("/login"));
-		System.out.println(url.indexOf("Ethan"));
-		if((httpRequest.getSession()== null || httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null)&& url.indexOf("/login")== -1 ){
+		
+		if((httpRequest.getSession()== null || httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null)&& url.indexOf("/login")== -1 && url.indexOf("/test")== -1 ){
 			Response.status(401).build();
 		}
 		else{

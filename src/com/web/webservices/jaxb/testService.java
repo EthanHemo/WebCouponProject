@@ -30,6 +30,13 @@ public class testService {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String test( @FormDataParam("pic") InputStream uploadedInputStream,
 						@FormDataParam("pic") FormDataContentDisposition fileDetail){
+		System.out.println("hii");
+		if(uploadedInputStream==null){
+			System.out.println("no file");
+		}
+		if(fileDetail==null){
+			System.out.println("no file name");
+		}
 		
 		String uploadedFileLocation = "/images/" + fileDetail.getFileName();
 		System.out.println(uploadedFileLocation);

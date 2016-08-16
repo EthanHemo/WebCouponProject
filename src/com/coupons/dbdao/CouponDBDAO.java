@@ -76,7 +76,7 @@ public class CouponDBDAO implements CouponDAO {
 	public void createCoupon(Coupon coupon, Company company) throws ManagerSQLException, ManagerThreadException {
 		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
 		String start_date = df.format(coupon.getStartDate());
-		String end_date = df.format(coupon.getStartDate());
+		String end_date = df.format(coupon.getEndDate());
 		String insertSQl = "insert into coupon(title, start_date, end_date, amount, type, message, price, image) "
 				+ "values ('" + coupon.getTitle() + "', '" + start_date + "', '" + end_date + "', " + coupon.getAmount()
 				+ ", '" + coupon.getType() + "', '" + coupon.getMessage() + "', " + coupon.getPrice() + ", '"
@@ -297,7 +297,8 @@ public class CouponDBDAO implements CouponDAO {
 	public Collection<Coupon> getCouponsByType(Company company, CouponType type)
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join company_coupon cc on c.id = cc.coupon_id "
-				+ "where cc.comp_id = " + company.getId() + "and where c.type='" + type.name() + "'";
+				+ "where cc.comp_id = " + company.getId() + " and c.type='" + type.name() + "'";
+		System.out.println(sql);
 		Collection<Coupon> coupons = new ArrayList<Coupon>();
 		Connection conn = null;
 		try {
@@ -338,7 +339,7 @@ public class CouponDBDAO implements CouponDAO {
 	public Collection<Coupon> getCouponsByType(Customer customer, CouponType type)
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join customer_coupon cc on c.id = cc.coupon_id "
-						+ "where cc.cust_id = " + customer.getId() + "and where c.type='" + type.name() + "'";
+						+ "where cc.cust_id = " + customer.getId() + " and  c.type='" + type.name() + "'";
 		Collection<Coupon> coupons = new ArrayList<Coupon>();
 		Connection conn = null;
 		try {
@@ -382,7 +383,7 @@ public class CouponDBDAO implements CouponDAO {
 		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
 		String end_date = df.format(date);
 		String sql = "select * from coupon c right join company_coupon cc on c.id = cc.coupon_id "
-				+ "where cc.comp_id = " + company.getId() + "and where c.end_date < '" + end_date + "';";
+				+ "where cc.comp_id = " + company.getId() + " and  c.end_date < '" + end_date + "';";
 		Collection<Coupon> coupons =  new ArrayList<Coupon>();
 		Connection conn = null;
 		try {
@@ -423,7 +424,7 @@ public class CouponDBDAO implements CouponDAO {
 	public Collection<Coupon> getCouponsOfCompanyUnilPrice(Company company, float price)
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join company_coupon cc on c.id = cc.coupon_id "
-				+ "where cc.comp_id = " + company.getId() + "and where c.price < '" + price + "';";
+				+ "where cc.comp_id = " + company.getId() + " and c.price < '" + price + "';";
 		Collection<Coupon> coupons = new ArrayList<Coupon>();
 		Connection conn = null;
 		try {

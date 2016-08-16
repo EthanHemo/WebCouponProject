@@ -14,7 +14,7 @@ import com.coupons.exceptions.ManagerThreadException;
 public interface CompanyDAO {
 
 
-	public void createCompany(Company company) throws ManagerSQLException, ManagerThreadException;
+	public Company createCompany(Company company) throws ManagerSQLException, ManagerThreadException;
 	
 	public void removeCompany(Company company) throws ManagerSQLException, ManagerThreadException;	
 	
