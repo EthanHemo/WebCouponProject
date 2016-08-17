@@ -48,16 +48,11 @@ public class LoginService {
 	public ClientData login(@FormParam("username") String username,
 			@FormParam("password") String password,
 			@FormParam("role") String role) {
-		System.out.println("Username: " + username);
-		System.out.println("Password: " + password);
-		System.out.println("Role: " + role);
-		JSONObject result = new JSONObject();
 		ClientData clientData = new ClientData();
 		
 
 		CouponClientFacade facade;
 		try {
-			Thread.currentThread().sleep(50);
 
 			CouponSystem couponSystem = CouponSystem.getInstance();
 			
@@ -69,14 +64,12 @@ public class LoginService {
 				clientData.setRole(role);
 				break;
 			case "company":
-				System.out.println("In company");
 				facade = couponSystem.login(username, password,
 						CouponSystem.COMPANY);
 				CompanyFacade companyFacade = (CompanyFacade)facade;
 				clientData.setUsername(companyFacade.getCompany().getCompanyName());
 				break;
 			case "customer":
-				System.out.println("In customer");
 				facade = couponSystem.login(username, password,
 						CouponSystem.CUSTOMER);
 				CustomerFacade customerFacade = (CustomerFacade)facade;

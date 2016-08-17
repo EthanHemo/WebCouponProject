@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/NewFile.css">
+    <link rel="stylesheet" href="style/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="scripts/ui-bootstrap-tpls-2.0.1.min.js"></script>
     <script src="scripts/scriptAngular.js"></script>
@@ -229,11 +229,11 @@
 							<table>
 								<tr>
 									<td>Coupon title:</td>
-									<td><input ng-model="newCoupon.title" id="newCoupon_title" name="newCoupon_title" /></td>
+									<td><input ng-model="newCoupon.title" ng-disabled="savedProperty" id="newCoupon_title" name="newCoupon_title" /></td>
 								</tr>
 								<tr>
 									<td>Coupon Start date:</td> 
-									<td><input ng-model="newCoupon.startDate"  type="date" id="newCoupon_startDate" name="newCoupon_startDate" /></td>
+									<td><input ng-model="newCoupon.startDate" ng-disabled="savedProperty"  type="date" id="newCoupon_startDate" name="newCoupon_startDate" /></td>
 								</tr>
 								<tr>
 									<td>Coupon End date:</td> 
@@ -241,12 +241,12 @@
 								</tr>
 								<tr>
 									<td>Coupon amount:</td>
-									<td><input ng-model="newCoupon.amount" id="newCoupon_amount" name="newCoupon_amount" /></td>
+									<td><input ng-model="newCoupon.amount" ng-disabled="savedProperty" id="newCoupon_amount" name="newCoupon_amount" /></td>
 								</tr>
 								<tr>
 									<td>Coupon type:</td>
 									<td>
-										<select ng-model="newCoupon.type" id="newCoupon_type" name="newCoupon_type">
+										<select ng-model="newCoupon.type" ng-disabled="savedProperty" id="newCoupon_type" name="newCoupon_type">
 											<option>RESTURANS</option>
 											<option>ELECTRICITY</option>
 											<option>FOOD</option>
@@ -259,7 +259,7 @@
 								</tr>
 								<tr>
 									<td>Coupon message:</td>
-									<td><textarea ng-model="newCoupon.message"  rows="4" cols="50"  id="newCoupon_message" name="newCoupon_message"></textarea></td>
+									<td><textarea ng-model="newCoupon.message" ng-disabled="savedProperty"  rows="4" cols="50"  id="newCoupon_message" name="newCoupon_message"></textarea></td>
 								</tr>
 								<tr>
 									<td>Coupon price:</td>
@@ -267,7 +267,7 @@
 								</tr>
 								<tr>
 									<td>Coupon picture:</td>
-									<td><input  ng-model="newCoupon.image" id="newCoupon_image" name="newCoupon_image" /></td>
+									<td><input  ng-model="newCoupon.image" ng-disabled="savedProperty" id="newCoupon_image" name="newCoupon_image" /></td>
 								</tr>
 								<tr>
 									<td colspan="2" id="coupon_table_button">

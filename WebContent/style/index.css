@@ -1,38 +1,27 @@
-*{
-	margin: 0px;
-	padding: 0px;
+@CHARSET "windows-1255";
+
+#main_wrapper{
+	padding: 20px;
+	
 }
 
-header, section, footer, aside, nav, article, hgroup{
-	display: block;
+#header{
+	background: #00CCFF;
 }
 
-body{
-	width:100%; /*important for flexible design, change it size dynamicly*/
-	height:100%;
+
+
+#login_form{
+	background: #fefefe;
+	padding: 15px;
 }
 
-#wrapper{
-	border:3px solid black;
-	background: rgba(12, 222, 0, 0.1);
-	display: -webkit-box;
-	-webkit-box-pack: center;
-	position: fixed; /* or absolute */
-  	top: 20%;
-  	left: 30%;
-  	width:600px;
-  	height:300px;
+#content{
+	background: #affb82;
+	padding: 20px;
 }
 
-#wrapper table{
-	margin:25px auto;
-	border-spacing:30px;
+#login_div {
+	padding: 20px;
 }
 
-select{
-	width:100%;
-}
-
-#buttons_cell{
-	text-align:center;
-}
