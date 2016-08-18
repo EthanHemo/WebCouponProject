@@ -267,7 +267,18 @@
 								</tr>
 								<tr>
 									<td>Coupon picture:</td>
-									<td><input  ng-model="newCoupon.image" ng-disabled="savedProperty" id="newCoupon_image" name="newCoupon_image" /></td>
+									<td>
+										<select ng-model="newCoupon.image" ng-disabled="savedProperty" id="newCoupon_image" name="newCoupon_image">
+											<option value="RESTURANS.jpg">RESTURANS</option>
+											<option value="ELECTRICITY.jpg">ELECTRICITY</option>
+											<option value="FOOD.jpg">FOOD</option>
+											<option value="HEALTH.jpg">HEALTH</option>
+											<option value="SPORTS.jpg">SPORTS</option>
+											<option value="CAMPING.jpg">CAMPING</option>
+											<option value="TRAVELING.jpg">TRAVELING</option>
+										</select>
+										<img ng-src="images\{{newCoupon.image}}" class="img-responsive" id="img_preview" />
+									</td>
 								</tr>
 								<tr>
 									<td colspan="2" id="coupon_table_button">
@@ -279,9 +290,25 @@
 						</form>
 					</div>
 					<div id="display_coupons" ng-show="coupons_display_designed">
+						<div ng-show="!buyCoupons">
+							filter by price: <input ng-model="custFilterByPriceText"><input type="button" class="btn btn-default" ng-click="custFilterByPrice()" value="filter" /><br />
+							filter by Type: 
+								<select ng-model="custFilterByTypeSelect">
+											<option>RESTURANS</option>
+											<option>ELECTRICITY</option>
+											<option>FOOD</option>
+											<option>HEALTH</option>
+											<option>SPORTS</option>
+											<option>CAMPING</option>
+											<option>TRAVELING</option>
+										</select> 
+										<input type="button" class="btn btn-default" ng-click="custFilterByType()" value="filter" /><br />
+								<input type="button" class="btn btn-warning" ng-click="getPurchasedCoupons()" value="reset" />
+						
+						</div>
 						<article ng-repeat="coupon in coupons"  class="row">
 							<div class="col-md-4">
-								<img ng-src="images\{{coupon.image}}" />
+								<img ng-src="images\{{coupon.image}}" class="img-responsive img-rounded" />
 							</div>
 							<div class="coupon_content col-md-6" >
 								<header>
@@ -292,10 +319,10 @@
 								<p>{{coupon.message}}</p>
 								<p>price: {{coupon.price}}</p>
 								<p>{{coupon.startDate | date:'dd-MM-yyyy'}} - {{coupon.endDate | date:'dd-MM-yyyy'}}</p>
-								<p>Type: {{coupon.type}} Amount: {{coupon.amount}}</p>
+								<p>Type: {{coupon.type}} Amount left: {{coupon.amount}}</p>
 							</div>
 							<div class="col-md-2">
-								<p>- Created by this company</p>
+								<input type="button" ng-click="purchaseCoupon($index)" ng-show="buyCoupons" value="Purchase" />
 							</div>
 						</article>
 					</div>

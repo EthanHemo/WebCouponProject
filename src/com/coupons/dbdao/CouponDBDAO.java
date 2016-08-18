@@ -167,6 +167,27 @@ public class CouponDBDAO implements CouponDAO {
 		}
 
 	}
+	
+	public void updateAmountCoupon(Coupon coupon) throws ManagerSQLException, ManagerThreadException {
+		String sqlUpdate = "update coupon set " + "amount = " + coupon.getAmount() + " " 
+				+ "where id =" + coupon.getId();
+		Connection conn = null;
+		System.out.println(sqlUpdate);
+		try {
+
+			conn = pool.getConnection();
+			Statement statement = conn.createStatement();
+
+			if (statement.executeUpdate(sqlUpdate) == 0) {
+				throw new ManagerSQLException("No record was updated.");
+			}
+		} catch (SQLException e) {
+			throw new ManagerSQLException(e.getMessage());
+		} finally {
+			pool.returnConnection(conn);
+		}
+
+	}
 
 	/**
 	 * This function return the company that belong to the ID that was given if
@@ -465,6 +486,7 @@ public class CouponDBDAO implements CouponDAO {
 						" where c.amount > 0"+
 						" and c.id not in (select coupon_id from customer_coupon cc" +
 						" where cc.cust_id =" + customer.getId() + ")";
+		
 		Collection<Coupon> coupons = new ArrayList<Coupon>();
 		Connection conn = null;
 		try {
@@ -505,7 +527,8 @@ public class CouponDBDAO implements CouponDAO {
 	public Collection<Coupon> getCouponsOfCustomerUntilPrice(Customer customer, float price)
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join customer_coupon cc on c.id = cc.coupon_id "
-				+ "where cc.comp_id = " + customer.getId() + "and where c.price < '" + price + "';";
+				+ " where cc.cust_id = " + customer.getId() + " and c.price < '" + price + "';";
+		System.out.println(sql);
 		Collection<Coupon> coupons = new ArrayList<Coupon>();;
 		Connection conn = null;
 		try {

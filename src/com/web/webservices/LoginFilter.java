@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 
 /**
@@ -40,12 +41,16 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String url = httpRequest.getRequestURL().toString();
 		
-		if((httpRequest.getSession()== null || httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null)&& url.indexOf("/login")== -1 && url.indexOf("/test")== -1 ){
-			Response.status(401).build();
+		if( httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null&& url.indexOf("/login")== -1  ){
+			System.out.println("error");
+			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		else{
+			if(httpRequest.getSession().getAttribute(FACADE_PARAMETER) != null)
+				System.out.println("Facade: " + httpRequest.getSession().getAttribute(FACADE_PARAMETER).toString());
 			chain.doFilter(request, response);
 		}
 			

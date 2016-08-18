@@ -45,7 +45,7 @@ public class CustomerFacade implements CouponClientFacade {
 		if (coupon.getAmount() > 0 && !couponDB.isCouponBelongToCustomer(customer, coupon)) {
 			customerDB.purchaseCoupon(customer, coupon);
 			coupon.setAmount(coupon.getAmount() - 1);
-			couponDB.updateCoupon(coupon);
+			couponDB.updateAmountCoupon(coupon);
 			customer.setCoupons(customerDB.getCoupons(customer));
 
 		}else{
