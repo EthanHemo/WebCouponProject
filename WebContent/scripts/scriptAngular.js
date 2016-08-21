@@ -38,6 +38,7 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.unauthorized = function(response){
 		$scope.resetLogin ();
 		$scope.resetContent();
+		alert("You have encounter error:\n" + JSON.stringify(response));
 	}
 	
 	
@@ -87,13 +88,16 @@ app.controller("CouponSystemController", function($scope, $http){
 	/******************* Admin functions ******************************/
 	
 	/******************* manage company  ******************************/
+	
 	$scope.getCompanies = function(){
 		$scope.resetContent();
 		$scope.company_display = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCompanies").success(function(response){
-			$scope.companies = response.company;
-		});
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCompanies").then(function(response){
+			$scope.companies = response.data.company;
+		}, $scope.unauthorized);
 	};
+	
+	
 
 	
 	$scope.updateCompany = function(index){
@@ -109,10 +113,10 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.deleteCompany = function(index){
 		if (confirm('Are you sure you want to delete this company from the database?')) {
 			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/removeCompany", $scope.companies[index])
-			.success(function(response){
+			.then(function(response){
 				alert("Company deleted");
 				$scope.getCompanies();
-			})
+			}, $scope.unauthorized);
 		} 
 	};
 
@@ -120,10 +124,10 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.sendCompany = function(){
 		
 		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/"+$scope.submitCompany, $scope.newCompany)
-				.success(function(response){
+				.then(function(response){
 					$scope.getCompanies();
 					$scope.newCompany= '';
-				})
+				},  $scope.unauthorized)
 	};
 	
 	$scope.resetCompany = function(){
