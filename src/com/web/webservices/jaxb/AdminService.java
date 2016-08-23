@@ -34,7 +34,6 @@ public class AdminService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void createCompany(Company company) {
-		System.out.println(company.toString());
 		try {
 			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
 				AdminFacade admin = (AdminFacade) request.getSession()
@@ -59,9 +58,6 @@ public class AdminService {
 		try {
 			AdminFacade admin = (AdminFacade) request.getSession()
 					.getAttribute(FACADE_PARAMETER);
-
-			System.out.println("Company " + company.getCompanyName() + " ("
-					+ company.getId() + ") is about to be deleted");
 			admin.removeCompany(company);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -73,7 +69,6 @@ public class AdminService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateCompany(Company company) {
-		System.out.println(company.toString());
 		try {
 			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
 				AdminFacade admin = (AdminFacade) request.getSession()
@@ -96,6 +91,13 @@ public class AdminService {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Company getCompany(@QueryParam("id") long id) {
+		try {
+			AdminFacade admin = (AdminFacade) request.getSession()
+					.getAttribute(FACADE_PARAMETER);
+			return admin.getCompany(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -109,7 +111,6 @@ public class AdminService {
 						.getAttribute(FACADE_PARAMETER);
 				return facade.getAllCompanies();
 			} else {
-				System.out.println("threr is NOT session");
 				AdminFacade facade = new AdminFacade();
 				return facade.getAllCompanies();
 			}
@@ -185,12 +186,10 @@ public class AdminService {
 	public Collection<Customer> getAllCustomer() throws Exception {
 		try {
 			if (request.getSession().getAttribute("facade") != null) {
-				System.out.println("threr is a session");
 				AdminFacade facade = (AdminFacade) request.getSession()
 						.getAttribute("facade");
 				return facade.getAllCustomer();
 			} else {
-				System.out.println("threr is NOT session");
 				AdminFacade facade = new AdminFacade();
 				return facade.getAllCustomer();
 			}

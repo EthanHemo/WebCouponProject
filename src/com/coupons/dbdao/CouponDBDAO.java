@@ -172,7 +172,6 @@ public class CouponDBDAO implements CouponDAO {
 		String sqlUpdate = "update coupon set " + "amount = " + coupon.getAmount() + " " 
 				+ "where id =" + coupon.getId();
 		Connection conn = null;
-		System.out.println(sqlUpdate);
 		try {
 
 			conn = pool.getConnection();
@@ -319,7 +318,6 @@ public class CouponDBDAO implements CouponDAO {
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join company_coupon cc on c.id = cc.coupon_id "
 				+ "where cc.comp_id = " + company.getId() + " and c.type='" + type.name() + "'";
-		System.out.println(sql);
 		Collection<Coupon> coupons = new ArrayList<Coupon>();
 		Connection conn = null;
 		try {
@@ -528,7 +526,6 @@ public class CouponDBDAO implements CouponDAO {
 			throws ManagerSQLException, ManagerThreadException {
 		String sql = "select * from coupon c right join customer_coupon cc on c.id = cc.coupon_id "
 				+ " where cc.cust_id = " + customer.getId() + " and c.price < '" + price + "';";
-		System.out.println(sql);
 		Collection<Coupon> coupons = new ArrayList<Coupon>();;
 		Connection conn = null;
 		try {
@@ -658,7 +655,7 @@ public class CouponDBDAO implements CouponDAO {
 			while (results.next()) {
 				removeCoupon(new Coupon(results.getLong("id")));
 				// Use the line before to get indication if the thread deleted coupons
-				//System.out.println("Coupon " + results.getLong("id") + " have been deleted from coupons");
+				// System.out.println("Coupon " + results.getLong("id") + " have been deleted from coupons");
 			}
 
 			pool.returnConnection(conn);

@@ -37,7 +37,6 @@ public class CompanyService {
 	public void createCoupon(Coupon coupon) {
 		try {
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
-			System.out.println(coupon.toString());
 			facade.createCoupon(coupon);
 		} catch (Exception e) {
 			
@@ -64,7 +63,6 @@ public class CompanyService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void updateCoupon(Coupon coupon) {
 		try {
-			System.out.println(coupon.toString());
 			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
 			facade.updateCoupon(coupon);
 		} catch (Exception e) {

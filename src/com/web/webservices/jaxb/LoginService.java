@@ -106,7 +106,6 @@ public class LoginService {
 	@GET
 	@Path("logout")
 	public void logout(){
-		System.out.println("In login");
 		request.getSession().invalidate();
 	}
 }

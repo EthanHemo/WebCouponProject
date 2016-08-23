@@ -45,12 +45,10 @@ public class LoginFilter implements Filter {
 		String url = httpRequest.getRequestURL().toString();
 		
 		if( httpRequest.getSession().getAttribute(FACADE_PARAMETER) == null&& url.indexOf("/login")== -1  ){
-			System.out.println("error");
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		else{
 			if(httpRequest.getSession().getAttribute(FACADE_PARAMETER) != null)
-				System.out.println("Facade: " + httpRequest.getSession().getAttribute(FACADE_PARAMETER).toString());
 			chain.doFilter(request, response);
 		}
 			
