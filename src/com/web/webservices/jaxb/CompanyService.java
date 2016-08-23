@@ -28,114 +28,91 @@ public class CompanyService {
 
 	@Context
 	HttpServletRequest request;
-	
+
 	private static final String FACADE_PARAMETER = "facade";
 
 	@POST
 	@Path("createCoupon")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void createCoupon(Coupon coupon) {
-		try {
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
-			facade.createCoupon(coupon);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
+	public void createCoupon(Coupon coupon) throws CouponException,
+			ManagerSQLException, ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		facade.createCoupon(coupon);
+
 	}
 
 	@POST
 	@Path("removeCoupon")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeCoupon(Coupon coupon) {
-		try {
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
-			facade.removeCoupon(coupon);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
+	public void removeCoupon(Coupon coupon) throws CouponException,
+			ManagerSQLException, ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		facade.removeCoupon(coupon);
 	}
 
 	@POST
 	@Path("updateCoupon")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateCoupon(Coupon coupon) {
-		try {
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute(FACADE_PARAMETER);
-			facade.updateCoupon(coupon);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
+	public void updateCoupon(Coupon coupon) throws CouponException,
+			ManagerSQLException, ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		facade.updateCoupon(coupon);
 	}
 
-	public Coupon getCoupon(long id) {
-		return null;
+	@GET
+	@Path("getCouponById")
+	public Coupon getCoupon(@QueryParam("id") long id)
+			throws ManagerThreadException, ManagerSQLException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		return facade.getCoupon(id);
 	}
 
 	@GET
 	@Path("getAllCoupon")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getAllCoupon() {
-		try {
-
-			if (request.getSession().getAttribute("facade") != null) {
-				CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
-				return facade.getAllCoupon();
-			}
-		} catch (ManagerSQLException | ManagerThreadException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+	public Collection<Coupon> getAllCoupon() throws ManagerSQLException,
+			ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute("facade");
+		return facade.getAllCoupon();
 	}
 
 	@GET
 	@Path("getCouponByType")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getCouponByType(@QueryParam("type") CouponType type) {
-		try {
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
-			return facade.getCouponByType(type);
-		} catch (ManagerSQLException | ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public Collection<Coupon> getCouponByType(
+			@QueryParam("type") CouponType type) throws ManagerSQLException,
+			ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute("facade");
+		return facade.getCouponByType(type);
 	}
 
 	@GET
 	@Path("getCouponUntilPrice")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getCouponUntilPrice(@QueryParam("price") float price) {
-		try {
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
-			return facade.getCouponUntilPrice(price);
-		} catch (ManagerSQLException | ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public Collection<Coupon> getCouponUntilPrice(
+			@QueryParam("price") float price) throws ManagerSQLException,
+			ManagerThreadException {
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute("facade");
+		return facade.getCouponUntilPrice(price);
 	}
 
 	@GET
 	@Path("getCouponUntilDate")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getCouponUntilDate(@QueryParam("date") String dateStr) {
-		try {
-			DateFormat df = new SimpleDateFormat("EEE MMM d yyyy");
-			Date date = df.parse(dateStr);
-			CompanyFacade facade = (CompanyFacade) request.getSession().getAttribute("facade");
-			return facade.getCouponUntilDate(date);
-		} catch (ManagerSQLException | ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public Collection<Coupon> getCouponUntilDate(
+			@QueryParam("date") String dateStr) throws ParseException,
+			ManagerSQLException, ManagerThreadException {
+		DateFormat df = new SimpleDateFormat("EEE MMM d yyyy");
+		Date date = df.parse(dateStr);
+		CompanyFacade facade = (CompanyFacade) request.getSession()
+				.getAttribute("facade");
+		return facade.getCouponUntilDate(date);
 	}
 }

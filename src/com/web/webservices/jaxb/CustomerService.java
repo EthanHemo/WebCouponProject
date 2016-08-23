@@ -17,6 +17,7 @@ import com.coupons.client.CustomerFacade;
 import com.coupons.data.Coupon;
 import com.coupons.data.CouponType;
 import com.coupons.data.Customer;
+import com.coupons.exceptions.CouponException;
 import com.coupons.exceptions.ManagerSQLException;
 import com.coupons.exceptions.ManagerThreadException;
 
@@ -32,84 +33,51 @@ public class CustomerService {
 	@Path("getCoupons")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Coupon> getCoupons() {
-		try {
-			CustomerFacade customer = (CustomerFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-
-			return customer.getAllPurchasedCoupons();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		return null;
+		CustomerFacade customer = (CustomerFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		return customer.getAllPurchasedCoupons();
 	}
-	
-	
+
 	@GET
 	@Path("getCouponsByType")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getAllPurchasedCouponsByType(@QueryParam("type") CouponType type) {
-		try {
-			CustomerFacade customer = (CustomerFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-
-			return customer.getAllPurchasedCouponsByType(type);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		return null;
+	public Collection<Coupon> getAllPurchasedCouponsByType(
+			@QueryParam("type") CouponType type) throws ManagerSQLException,
+			ManagerThreadException {
+		CustomerFacade customer = (CustomerFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		return customer.getAllPurchasedCouponsByType(type);
 	}
-	
+
 	@GET
 	@Path("getCouponsByPrice")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getCouponsByPrice(@QueryParam("price") float price) {
-		try {
-			CustomerFacade customer = (CustomerFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
+	public Collection<Coupon> getCouponsByPrice(@QueryParam("price") float price)
+			throws ManagerSQLException, ManagerThreadException {
+		CustomerFacade customer = (CustomerFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		return customer.getAllPurchasedCouponsUntilPrice(price);
+	}
 
-			return customer.getAllPurchasedCouponsUntilPrice(price);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		return null;
-	}	
-	
-	
 	@GET
 	@Path("getAvailableCoupons")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Coupon> getAvailableCoupons() {
-		try {
-			CustomerFacade customer = (CustomerFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
+	public Collection<Coupon> getAvailableCoupons()
+			throws ManagerThreadException, ManagerSQLException {
+		CustomerFacade customer = (CustomerFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		return customer.getAllAvailableCoupons();
+	}
 
-			return customer.getAllAvailableCoupons();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		return null;
-	}	
-	
 	@POST
 	@Path("purchaseCoupon")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void purchaseCoupon(Coupon coupon) {
-		try {
-			CustomerFacade customer = (CustomerFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-
-			customer.purchaseCoupon(coupon);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	}	
-	
-
+	public void purchaseCoupon(Coupon coupon) throws ManagerThreadException,
+			ManagerSQLException, CouponException {
+		CustomerFacade customer = (CustomerFacade) request.getSession()
+				.getAttribute(FACADE_PARAMETER);
+		customer.purchaseCoupon(coupon);
+	}
 }

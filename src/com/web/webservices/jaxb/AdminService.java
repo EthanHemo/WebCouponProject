@@ -28,178 +28,105 @@ public class AdminService {
 
 	private static final String FACADE_PARAMETER = "facade";
 
-	
-
 	@Path("/createCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void createCompany(Company company) {
-		try {
-			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
-				AdminFacade admin = (AdminFacade) request.getSession()
-						.getAttribute(FACADE_PARAMETER);
-				admin.createCompany(company);
-			} else {
+	public void createCompany(Company company) throws ManagerThreadException,
+			ManagerSQLException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.createCompany(company);
 
-			}
-		} catch (ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ManagerSQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Path("/removeCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeCompany(Company company) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			admin.removeCompany(company);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void removeCompany(Company company) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.removeCompany(company);
 	}
 
 	@Path("/updateCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateCompany(Company company) {
-		try {
-			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
-				AdminFacade admin = (AdminFacade) request.getSession()
-						.getAttribute(FACADE_PARAMETER);
-				admin.updateCompany(company);
-			} else {
-
-			}
-		} catch (ManagerThreadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ManagerSQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void updateCompany(Company company) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.updateCompany(company);
 	}
 
 	@Path("/getCompany")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Company getCompany(@QueryParam("id") long id) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			return admin.getCompany(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+	public Company getCompany(@QueryParam("id") long id)
+			throws ManagerSQLException, ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		return admin.getCompany(id);
 	}
 
 	@Path("/getAllCompanies")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Company> getAllCompanies() {
-		try {
-			if (request.getSession().getAttribute(FACADE_PARAMETER) != null) {
-				AdminFacade facade = (AdminFacade) request.getSession()
-						.getAttribute(FACADE_PARAMETER);
-				return facade.getAllCompanies();
-			} else {
-				AdminFacade facade = new AdminFacade();
-				return facade.getAllCompanies();
-			}
-		} catch (ManagerSQLException e) {
-			e.printStackTrace();
-		} catch (ManagerThreadException e) {
-			e.printStackTrace();
-		}
-
-		return null;
+	public Collection<Company> getAllCompanies() throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade facade = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		return facade.getAllCompanies();
 	}
 
 	@Path("/createCustomer")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void createCustomer(Customer customer) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			admin.createCustomer(customer);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void createCustomer(Customer customer) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.createCustomer(customer);
 	}
 
 	@Path("/removeCustomer")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void removeCustomer(Customer customer) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			admin.removeCustomer(customer);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void removeCustomer(Customer customer) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.removeCustomer(customer);
 	}
 
 	@Path("/updateCustomer")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void updateCustomer(Customer customer) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			admin.updateCustomer(customer);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void updateCustomer(Customer customer) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		admin.updateCustomer(customer);
 	}
 
 	@Path("/getCustomer")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Customer getCustomer(long id) {
-		try {
-			AdminFacade admin = (AdminFacade) request.getSession()
-					.getAttribute(FACADE_PARAMETER);
-			return admin.getCustomer(id);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public Customer getCustomer(long id) throws ManagerSQLException,
+			ManagerThreadException {
+		AdminFacade admin = (AdminFacade) request.getSession().getAttribute(
+				FACADE_PARAMETER);
+		return admin.getCustomer(id);
 	}
 
 	@Path("/getAllCustomer")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Customer> getAllCustomer() throws Exception {
-		try {
-			if (request.getSession().getAttribute("facade") != null) {
+	public Collection<Customer> getAllCustomer() throws ManagerSQLException, ManagerThreadException {
 				AdminFacade facade = (AdminFacade) request.getSession()
 						.getAttribute("facade");
 				return facade.getAllCustomer();
-			} else {
-				AdminFacade facade = new AdminFacade();
-				return facade.getAllCustomer();
-			}
-		} catch (ManagerSQLException e) {
-			e.printStackTrace();
-		} catch (ManagerThreadException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 }

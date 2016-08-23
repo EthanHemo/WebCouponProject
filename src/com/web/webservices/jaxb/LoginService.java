@@ -15,13 +15,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 
-
-
-
-
-
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +31,7 @@ import com.web.data.ClientData;
 public class LoginService {
 
 	private static final String FACADE_PARAMETER = "facade";
-	
+
 	@Context
 	HttpServletRequest request;
 
@@ -47,65 +40,57 @@ public class LoginService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ClientData login(@FormParam("username") String username,
 			@FormParam("password") String password,
-			@FormParam("role") String role) {
+			@FormParam("role") String role) throws ManagerSQLException,
+			UserNotFoundException, ManagerThreadException {
 		ClientData clientData = new ClientData();
-		
-
 		CouponClientFacade facade;
-		try {
-
-			CouponSystem couponSystem = CouponSystem.getInstance();
-			
-			
-			switch (role) {
-			case "admin":
-				facade = couponSystem.login(username, password,	CouponSystem.ADMIN);				
-				clientData.setUsername(username);
-				clientData.setRole(role);
-				break;
-			case "company":
-				facade = couponSystem.login(username, password,
-						CouponSystem.COMPANY);
-				CompanyFacade companyFacade = (CompanyFacade)facade;
-				clientData.setUsername(companyFacade.getCompany().getCompanyName());
-				break;
-			case "customer":
-				facade = couponSystem.login(username, password,
-						CouponSystem.CUSTOMER);
-				CustomerFacade customerFacade = (CustomerFacade)facade;
-				clientData.setUsername(customerFacade.getCustomer().getCustName());
-				break;
-			default:
-				throw new UserNotFoundException("No such type");
-			}
+		CouponSystem couponSystem = CouponSystem.getInstance();
+		switch (role) {
+		case "admin":
+			facade = couponSystem.login(username, password, CouponSystem.ADMIN);
+			clientData.setUsername(username);
 			clientData.setRole(role);
-			request.getSession().setAttribute(FACADE_PARAMETER, facade);
-			return clientData;
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		} 
+			break;
+		case "company":
+			facade = couponSystem.login(username, password,
+					CouponSystem.COMPANY);
+			CompanyFacade companyFacade = (CompanyFacade) facade;
+			clientData.setUsername(companyFacade.getCompany().getCompanyName());
+			break;
+		case "customer":
+			facade = couponSystem.login(username, password,
+					CouponSystem.CUSTOMER);
+			CustomerFacade customerFacade = (CustomerFacade) facade;
+			clientData.setUsername(customerFacade.getCustomer().getCustName());
+			break;
+		default:
+			throw new UserNotFoundException("No such type");
+		}
+		clientData.setRole(role);
+		request.getSession().setAttribute(FACADE_PARAMETER, facade);
 		return clientData;
 	}
-	
+
 	@GET
 	@Path("loginTest")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ClientData test(){
+	public ClientData test() {
 		ClientData data = new ClientData();
 		data.setRole("admin");
 		data.setUsername("Ethan");
 		return data;
 	}
-	
+
 	@GET
 	@Path("isConnected")
-	public String isConnected(){
-		return String.valueOf(request.getSession().getAttribute(FACADE_PARAMETER) != null);
+	public String isConnected() {
+		return String.valueOf(request.getSession().getAttribute(
+				FACADE_PARAMETER) != null);
 	}
-	
+
 	@GET
 	@Path("logout")
-	public void logout(){
+	public void logout() {
 		request.getSession().invalidate();
 	}
 }
