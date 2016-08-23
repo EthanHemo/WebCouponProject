@@ -148,7 +148,7 @@ public class CouponDBDAO implements CouponDAO {
 	@Override
 	public void updateCoupon(Coupon coupon) throws ManagerSQLException, ManagerThreadException {
 		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-		String end_date = df.format(coupon.getStartDate());
+		String end_date = df.format(coupon.getEndDate());
 		String sqlUpdate = "update coupon set " + "end_date = '" + end_date + "', " + "price = '" + coupon.getPrice()
 				+ "' " + "where id =" + coupon.getId();
 		Connection conn = null;

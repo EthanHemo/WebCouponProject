@@ -35,7 +35,7 @@ app.controller("CouponSystemController", function($scope, $http){
 		$scope.submitCation = "Create";
 	};
 	
-	$scope.unauthorized = function(response){
+	$scope.errorHandler = function(response){
 		$scope.resetLogin ();
 		$scope.resetContent();
 		alert("You have encounter error:\n" + JSON.stringify(response));
@@ -94,7 +94,7 @@ app.controller("CouponSystemController", function($scope, $http){
 		$scope.company_display = true;
 		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCompanies").then(function(response){
 			$scope.companies = response.data.company;
-		}, $scope.unauthorized);
+		}, $scope.errorHandler);
 	};
 	
 	
@@ -116,7 +116,7 @@ app.controller("CouponSystemController", function($scope, $http){
 			.then(function(response){
 				alert("Company deleted");
 				$scope.getCompanies();
-			}, $scope.unauthorized);
+			}, $scope.errorHandler);
 		} 
 	};
 
@@ -127,7 +127,7 @@ app.controller("CouponSystemController", function($scope, $http){
 				.then(function(response){
 					$scope.getCompanies();
 					$scope.newCompany= '';
-				},  $scope.unauthorized)
+				},  $scope.errorHandler)
 	};
 	
 	$scope.resetCompany = function(){
@@ -143,9 +143,9 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.getCustomers = function(){
 		$scope.resetContent();
 		$scope.customer_display = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCustomer").success(function(response){
-			$scope.customers = response.customer;
-		});
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/admin/getAllCustomer").then(function(response){
+			$scope.customers = response.data.customer;
+		},$scope.errorHandler);
 	};
 	
 	$scope.updateCustomer = function(index){
@@ -161,20 +161,20 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.deleteCustomer = function(index){
 		if (confirm('Are you sure you want to delete this Customer from the database?')) {
 			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/removeCustomer", $scope.customers[index])
-			.success(function(response){
+			.then(function(response){
 				alert("Customer deleted");
 				$scope.getCustomers();
-			})
+			}, $scope.errorHandler)
 		} 
 	};
 
 	
 	$scope.sendCustomer = function(){
 		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/admin/"+$scope.submitCustomer, $scope.newCustomer)
-				.success(function(response){
+				.then(function(response){
 					$scope.getCustomers();
 					$scope.newCustomer= '';
-				})
+				},$scope.errorHandler)
 	};
 	
 	$scope.resetCustomer = function(){
@@ -191,7 +191,6 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.getCoupons = function(){
 		$scope.coupons_display = true;
 		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getAllCoupon").then(function(response){
-			alert(JSON.stringify(response));
 			if(response.data){
 				if(response.data.coupon.length){
 					$scope.coupons = response.data.coupon;
@@ -201,9 +200,7 @@ app.controller("CouponSystemController", function($scope, $http){
 					$scope.coupons.push(response.data.coupon);
 				}
 			}
-		}, function(response){
-			$scope.unauthorized(response);
-		});
+		}, $scope.errorHandler);
 		
 	};
 	
@@ -223,68 +220,68 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.deleteCoupon = function(index){
 		if (confirm('Are you sure you want to delete this Coupon from the database?')) {
 			$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/company/removeCoupon", $scope.coupons[index])
-			.success(function(response){
+			.then(function(response){
 				alert("Coupon deleted");
 				$scope.getCoupons();
-			})
+			}, $scope.errorHandler)
 		} 
 	};
 
 	
 	$scope.sendCoupon = function(){
 		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/company/"+$scope.submitCoupon, $scope.newCoupon)
-				.success(function(response){
+				.then(function(response){
 					$scope.getCoupons();
 					$scope.newCoupon= '';
-				})
+				}, $scope.errorHandler)
 	};
 	
 	$scope.filterByType = function(){
 		$scope.resetContent();
 		$scope.coupons_display = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponByType?type="+$scope.filterByTypeSelect).success(function(response){
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponByType?type="+$scope.filterByTypeSelect).then(function(response){
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
-				else if(response.coupon != null){
+				else if(response.data.coupon != null){
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}
-		});
+		},$scope.errorHandler);
 	};
 	
 	$scope.filterByPrice = function(){
 		$scope.resetContent();
 		$scope.coupons_display = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponUntilPrice?price="+$scope.filterByPriceText).success(function(response){
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponUntilPrice?price="+$scope.filterByPriceText).then(function(response){
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
-				else if(response.coupon != null){
+				else if(response.data.coupon != null){
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}
-		});
+		}, $scope.errorHandler);
 	};
 	
 	$scope.filterByDate = function(){
 		$scope.resetContent();
 		$scope.coupons_display = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponUntilDate?date="+$scope.filterByDateDate.toDateString()).success(function(response){
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/company/getCouponUntilDate?date="+$scope.filterByDateDate.toDateString()).then(function(response){
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
-				else if(response.coupon != null){
+				else if(response.data.coupon != null){
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}
-		});
+		}, $scope.errorHandler);
 	}
 	
 	
@@ -302,87 +299,87 @@ app.controller("CouponSystemController", function($scope, $http){
 	$scope.getAvailableCoupons = function(){
 		$scope.resetContent();
 		$scope.coupons_display_designed = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getAvailableCoupons").success(function(response){
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getAvailableCoupons").then(function(response){
 			$scope.buyCoupons=true;
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
-				else if(response.coupon != null){
+				else if(response.data.coupon != null){
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}else{
 				$scope.coupons ='';
 			}
-		});
+		}, $scope.errorHandler);
 	};
 	
 	$scope.getPurchasedCoupons = function(){
 		$scope.resetContent();
 		$scope.coupons_display_designed = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCoupons").success(function(response){
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCoupons").then(function(response){
 			$scope.buyCoupons=false;
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
 				else{
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}else{
 				$scope.coupons ='';
 			}
 			
-		});
+		}, $scope.errorHandler);
 	};
 	
 	$scope.custFilterByPrice = function(){
 		$scope.resetContent();
 		$scope.coupons_display_designed = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCouponsByPrice?price="+ $scope.custFilterByPriceText).success(function(response){
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCouponsByPrice?price="+ $scope.custFilterByPriceText).then(function(response){
 			$scope.buyCoupons=false;
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
 				else{
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}else{
 				$scope.coupons ='';
 			}
 			
-		});
+		}, $scope.errorHandler);
 	};
 	
 	$scope.custFilterByType = function(){
 		$scope.resetContent();
 		$scope.coupons_display_designed = true;
-		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCouponsByType?type="+ $scope.custFilterByTypeSelect).success(function(response){
+		$http.get("http://localhost:8080/WebCouponProject/rest/jaxb/customer/getCouponsByType?type="+ $scope.custFilterByTypeSelect).then(function(response){
 			$scope.buyCoupons=false;
-			if(response){
-				if(response.coupon.length){
-					$scope.coupons = response.coupon;
+			if(response.data){
+				if(response.data.coupon.length){
+					$scope.coupons = response.data.coupon;
 				}
 				else{
 					$scope.coupons = [];
-					$scope.coupons.push(response.coupon);
+					$scope.coupons.push(response.data.coupon);
 				}
 			}else{
 				$scope.coupons ='';
 			}
 			
-		});
+		}, $scope.errorHandler);
 	};
 	
 	$scope.purchaseCoupon= function(index){
-		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/customer/purchaseCoupon",$scope.coupons[index]).success(function(response){
+		$http.post("http://localhost:8080/WebCouponProject/rest/jaxb/customer/purchaseCoupon",$scope.coupons[index]).then(function(response){
 			$scope.buyCoupons=false;
 			$scope.getPurchasedCoupons();
-		});
+		}, $scope.errorHandler);
 		
 	};
 	
