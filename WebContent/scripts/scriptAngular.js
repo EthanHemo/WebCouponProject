@@ -66,11 +66,9 @@ app.controller("CouponSystemController", function($scope, $http){
 
             	$scope.panel = response.data.role;
               }else {
-                  alert("Error Login");
+            	  $scope.errorHandler(response);
               }
-            }, function(response){
-            	 alert("Error Login");
-            });
+            },$scope.errorHandler);
             
           
       

@@ -48,7 +48,6 @@ public class LoginFilter implements Filter {
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		else{
-			if(httpRequest.getSession().getAttribute(FACADE_PARAMETER) != null)
 			chain.doFilter(request, response);
 		}
 			
